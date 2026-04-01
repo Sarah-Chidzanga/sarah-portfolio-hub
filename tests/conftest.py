@@ -2,7 +2,6 @@ import os
 import pytest
 import boto3
 from moto import mock_aws
-from flask import Flask
 
 # Set fake AWS credentials before any boto3 calls
 os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
@@ -49,15 +48,6 @@ TABLE_SCHEMAS = [
         'BillingMode': 'PAY_PER_REQUEST',
     },
 ]
-
-
-@pytest.fixture
-def dynamo(aws_credentials):
-    with mock_aws():
-        ddb = boto3.resource('dynamodb', region_name='us-east-1')
-        for schema in TABLE_SCHEMAS:
-            ddb.create_table(**schema)
-        yield ddb
 
 
 @pytest.fixture

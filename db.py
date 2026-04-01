@@ -55,7 +55,11 @@ def get_global_visit_count():
 
 
 def query_items(table_name, pk, scan_index_forward=True, limit=50):
-    """Query all items with a given pk, sorted by sk. Pass scan_index_forward=False for newest-first."""
+    """Query all items with a given pk, sorted by sk.
+    Pass scan_index_forward=False for newest-first order.
+    Note: returns at most `limit` items. Default limit=50 is sufficient for
+    comments on a personal portfolio. Callers needing all items should increase limit.
+    """
     response = _table(table_name).query(
         KeyConditionExpression=Key('pk').eq(pk),
         ScanIndexForward=scan_index_forward,
@@ -65,6 +69,9 @@ def query_items(table_name, pk, scan_index_forward=True, limit=50):
 
 
 def scan_table(table_name):
-    """Return all items in a table (use for small tables like books, projects)."""
+    """Return all items in a table (use for small tables like books, projects).
+    Note: returns at most 1 MB of data in a single scan. Safe for small tables
+    (books, projects) but do not use for unbounded large tables.
+    """
     response = _table(table_name).scan()
     return response.get('Items', [])
