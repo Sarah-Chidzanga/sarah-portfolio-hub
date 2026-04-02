@@ -14,6 +14,7 @@ def create_app():
     from routes.contact import contact_bp
     from routes.settings import settings_bp
     from routes.visits import visits_bp
+    from routes.api import api_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(timeline_bp)
@@ -25,6 +26,7 @@ def create_app():
     app.register_blueprint(contact_bp)
     app.register_blueprint(settings_bp)
     app.register_blueprint(visits_bp)
+    app.register_blueprint(api_bp)
 
     return app
 
