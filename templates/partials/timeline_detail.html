@@ -1,5 +1,5 @@
 {% if is_open %}
-<div class="timeline-detail" style="display: block;">
+<div class="timeline-detail" id="detail-{{ milestone.id }}" style="display: block;">
   <p style="color: var(--text-secondary);">{{ milestone.detail }}</p>
   <div style="margin-top: 0.75rem;">
     {% for tag in milestone.tags %}
