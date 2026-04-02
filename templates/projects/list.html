@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Projects — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Projects</h1>
+<p class="section-subtitle">Integration work at Jamf and apps I built at MCRI.</p>
+
+<div style="display:flex; gap:0.75rem; margin-bottom:2rem;">
+  <a href="/projects?category=all"  class="like-btn {% if active_category=='all'  %}liked{% endif %}">All ({{ all_projects|length }})</a>
+  <a href="/projects?category=jamf" class="like-btn {% if active_category=='jamf' %}liked{% endif %}">Jamf Work</a>
+  <a href="/projects?category=mcri" class="like-btn {% if active_category=='mcri' %}liked{% endif %}">MCRI Apps</a>
+</div>
+
+{% if projects %}
+<div class="card-grid">
+  {% for project in projects %}
+  <a href="/projects/{{ project.pk }}" style="text-decoration:none;">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
+        <h3 style="font-size:1rem;">{{ project.title }}</h3>
+        <span class="phase-badge">{{ project.current_phase }}</span>
+      </div>
+      <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom:0.75rem;">{{ project.description }}</p>
+      <div>
+        {% for tech in project.tech_stack %}
+          <span class="tag">{{ tech }}</span>
+        {% endfor %}
+      </div>
+      <div style="margin-top:0.75rem; color:var(--text-secondary); font-size:0.82rem;">
+        ❤ {{ project.like_count | default(0) | int }}
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<p style="color: var(--text-secondary);">No projects in this category yet.</p>
+{% endif %}
+{% endblock %}

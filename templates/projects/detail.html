@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:0.5rem;">
+  <a href="/projects" style="color:var(--text-secondary); font-size:0.85rem;">← All Projects</a>
+</div>
+
+<h1 class="section-title">{{ project.title }}</h1>
+<p class="section-subtitle">{{ project.description }}</p>
+
+<div style="margin-bottom:1.5rem;">
+  {% for tech in project.tech_stack %}
+    <span class="tag">{{ tech }}</span>
+  {% endfor %}
+</div>
+
+<!-- Living Brief Phase Progress -->
+<div class="card" style="margin-bottom:2rem;">
+  <h3 style="margin-bottom:1rem; color:var(--accent);">Living Brief</h3>
+  <div style="display:flex; gap:0; margin-bottom:1.5rem; overflow-x:auto;">
+    {% for phase in phases %}
+    <div style="flex:1; text-align:center; padding:0.5rem 0.25rem; min-width:80px;
+                {% if loop.index0 < phase_index %}color:var(--accent); border-bottom:2px solid var(--accent);
+                {% elif loop.index0 == phase_index %}color:var(--text-primary); border-bottom:2px solid var(--accent); font-weight:700;
+                {% else %}color:var(--text-secondary); border-bottom:2px solid var(--border);{% endif %}
+                font-size:0.78rem;">
+      {{ phase }}
+    </div>
+    {% endfor %}
+  </div>
+
+  {% for phase in phases %}
+    {% if project.phases and phase in project.phases %}
+    <div style="margin-bottom:0.75rem;">
+      <div style="font-size:0.8rem; font-weight:600; color:var(--accent); margin-bottom:0.2rem;">{{ phase }}</div>
+      <p style="color:var(--text-secondary); font-size:0.875rem;">{{ project.phases[phase] }}</p>
+    </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<!-- Like button -->
+<div style="margin-bottom:2rem;">
+  {% with target_type='project', target_id=project.pk, count=project.like_count|default(0)|int, liked=false %}
+    {% include 'partials/like_button.html' %}
+  {% endwith %}
+</div>
+
+<!-- Comments -->
+<h2 style="font-size:1.25rem; margin-bottom:1rem;">Comments</h2>
+
+<form class="comment-form"
+      hx-post="/comment/project/{{ project.pk }}"
+      hx-target="#comment-list"
+      hx-swap="innerHTML"
+      hx-on::after-request="this.reset()">
+  <input type="text" name="author" placeholder="Your name" maxlength="80">
+  <textarea name="body" placeholder="Share your thoughts..." maxlength="500"></textarea>
+  <button type="submit">Post comment</button>
+</form>
+
+<div id="comment-list">
+  {% include 'partials/comment_list.html' %}
+</div>
+{% endblock %}
