@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}{{ difficulty | capitalize }} Puzzle — {{ photo.location }}{% endblock %}
+
+{% block content %}
+<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
+  <a href="/puzzle/{{ photo.pk | e }}" style="color:var(--text-secondary); font-size:0.85rem;">← Change difficulty</a>
+  <span style="color:var(--text-secondary);">|</span>
+  <span style="color:var(--text-secondary); font-size:0.85rem;">{{ photo.location }} · {{ difficulty | capitalize }} ({{ rows }}×{{ cols }})</span>
+</div>
+
+<div style="display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start; justify-content:center;">
+
+  <!-- Puzzle board -->
+  <div>
+    <div id="puzzle-board"
+         style="
+           display: grid;
+           grid-template-columns: repeat({{ cols }}, 1fr);
+           gap: 3px;
+           width: min(480px, 90vw);
+           aspect-ratio: 1;
+           background: var(--bg-secondary);
+           border-radius: 8px;
+           padding: 3px;
+         ">
+    </div>
+
+    <div style="display:flex; gap:0.75rem; margin-top:1rem; flex-wrap:wrap;">
+      <button class="like-btn" onclick="shufflePuzzle()" style="flex:1;">🔀 Shuffle</button>
+      <button class="like-btn" onclick="solvePuzzle()" style="flex:1;">👁 Peek solution</button>
+    </div>
+  </div>
+
+  <!-- Info panel -->
+  <div style="max-width:220px;">
+    <div class="card" style="margin-bottom:1rem;">
+      <div style="font-size:0.78rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem;">Moves</div>
+      <div id="move-counter" style="font-size:2rem; font-weight:700; color:var(--accent);">0</div>
+    </div>
+    <div id="success-panel" class="card" style="display:none; border-color:var(--accent); text-align:center;">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">🎉</div>
+      <div style="font-weight:700; color:var(--accent); margin-bottom:0.25rem;">Solved!</div>
+      <div id="final-moves" style="color:var(--text-secondary); font-size:0.85rem;"></div>
+      <a href="/puzzle/{{ photo.pk | e }}" style="display:block; margin-top:0.75rem; color:var(--accent);">Play again →</a>
+    </div>
+    <p style="color:var(--text-secondary); font-size:0.8rem; margin-top:0.75rem;">
+      Drag a tile onto another tile to swap them.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  var PHOTO_URL = "{{ photo.s3_url | e }}";
+  var ROWS = {{ rows }};
+  var COLS = {{ cols }};
+  var moves = 0;
+  var dragSourceIndex = null;
+
+  // tile order: tiles[i] = the solved-position index of the tile currently at slot i
+  var tiles = [];
+
+  function buildBoard() {
+    var board = document.getElementById('puzzle-board');
+    board.innerHTML = '';
+    tiles.forEach(function(solvedIdx, slotIdx) {
+      var tile = makeTile(solvedIdx, slotIdx);
+      board.appendChild(tile);
+    });
+  }
+
+  function makeTile(solvedIdx, slotIdx) {
+    var tileW = 100 / COLS;
+    var tileH = 100 / ROWS;
+    var col = solvedIdx % COLS;
+    var row = Math.floor(solvedIdx / COLS);
+
+    var div = document.createElement('div');
+    div.dataset.slotIndex = slotIdx;
+    div.dataset.solvedIndex = solvedIdx;
+    div.draggable = true;
+    div.style.cssText = [
+      'background-image: url(' + PHOTO_URL + ');',
+      'background-size: ' + (COLS * 100) + '% ' + (ROWS * 100) + '%;',
+      'background-position: ' + (col * 100 / (COLS - 1 || 1)) + '% ' + (row * 100 / (ROWS - 1 || 1)) + '%;',
+      'border-radius: 4px;',
+      'cursor: grab;',
+      'transition: opacity 0.15s, transform 0.1s;',
+      'aspect-ratio: 1;',
+    ].join('');
+
+    div.addEventListener('dragstart', onDragStart);
+    div.addEventListener('dragover',  onDragOver);
+    div.addEventListener('drop',      onDrop);
+    div.addEventListener('dragend',   onDragEnd);
+    return div;
+  }
+
+  function onDragStart(e) {
+    dragSourceIndex = parseInt(e.currentTarget.dataset.slotIndex);
+    e.currentTarget.style.opacity = '0.45';
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function onDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    e.currentTarget.style.transform = 'scale(1.05)';
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    var dropTargetIndex = parseInt(e.currentTarget.dataset.slotIndex);
+    if (dragSourceIndex !== null && dragSourceIndex !== dropTargetIndex) {
+      // Swap in the tiles array
+      var tmp = tiles[dragSourceIndex];
+      tiles[dragSourceIndex] = tiles[dropTargetIndex];
+      tiles[dropTargetIndex] = tmp;
+
+      moves++;
+      document.getElementById('move-counter').textContent = moves;
+      buildBoard();
+      checkSolved();
+    }
+  }
+
+  function onDragEnd(e) {
+    e.currentTarget.style.opacity = '1';
+    e.currentTarget.style.transform = '';
+    dragSourceIndex = null;
+    // Reset all scale transforms in case dragend fires before buildBoard
+    document.querySelectorAll('#puzzle-board > div').forEach(function(t) {
+      t.style.transform = '';
+    });
+  }
+
+  function checkSolved() {
+    var solved = tiles.every(function(solvedIdx, slotIdx) {
+      return solvedIdx === slotIdx;
+    });
+    if (solved) {
+      var panel = document.getElementById('success-panel');
+      panel.style.display = 'block';
+      document.getElementById('final-moves').textContent = 'Solved in ' + moves + ' move' + (moves === 1 ? '' : 's') + '!';
+    }
+  }
+
+  function shufflePuzzle() {
+    // Fisher-Yates shuffle
+    for (var i = tiles.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = tiles[i]; tiles[i] = tiles[j]; tiles[j] = tmp;
+    }
+    // Ensure it's not already solved after shuffle
+    if (tiles.every(function(v, i) { return v === i; })) {
+      var tmp = tiles[0]; tiles[0] = tiles[1]; tiles[1] = tmp;
+    }
+    moves = 0;
+    document.getElementById('move-counter').textContent = '0';
+    document.getElementById('success-panel').style.display = 'none';
+    buildBoard();
+  }
+
+  function solvePuzzle() {
+    for (var i = 0; i < tiles.length; i++) { tiles[i] = i; }
+    buildBoard();
+    document.getElementById('success-panel').style.display = 'none';
+  }
+
+  // Initialise
+  for (var i = 0; i < ROWS * COLS; i++) { tiles.push(i); }
+  shufflePuzzle();
+</script>
+{% endblock %}

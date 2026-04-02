@@ -31,6 +31,14 @@
 
       <div id="lb-like"></div>
 
+      <div style="margin-bottom:1rem;">
+        <a id="lb-puzzle-link" href="#"
+           class="like-btn"
+           style="text-decoration:none; font-size:0.85rem;">
+          🧩 Play as puzzle
+        </a>
+      </div>
+
       <h4 style="margin:1rem 0 0.5rem;">Comments</h4>
       <form class="comment-form"
             id="lb-comment-form"
@@ -88,6 +96,7 @@
       .then(r => r.text())
       .then(html => { document.getElementById('lb-comments').innerHTML = html; });
 
+    document.getElementById('lb-puzzle-link').href = '/puzzle/' + id;
     document.getElementById('lightbox').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   }

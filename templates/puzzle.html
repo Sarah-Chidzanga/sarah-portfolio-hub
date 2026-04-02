@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Puzzle — {{ photo.location }} — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<div style="margin-bottom:0.75rem;">
+  <a href="/sunsets" style="color:var(--text-secondary); font-size:0.85rem;">← Back to Sunsets</a>
+</div>
+
+<h1 class="section-title">🧩 Sunset Puzzle</h1>
+<p class="section-subtitle">{{ photo.location }} · {{ photo.taken_at }}</p>
+
+<div style="max-width:480px; margin:0 auto; text-align:center;">
+  <img src="{{ photo.s3_url | e }}"
+       alt="Sunset at {{ photo.location | e }}"
+       style="width:100%; border-radius:12px; margin-bottom:2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.4);">
+
+  <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Choose your difficulty:</p>
+
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <a href="/puzzle/{{ photo.pk | e }}/easy"
+       style="text-decoration:none;"
+       class="like-btn">
+      ☀️ Easy (3×3)
+    </a>
+    <a href="/puzzle/{{ photo.pk | e }}/medium"
+       style="text-decoration:none;"
+       class="like-btn">
+      🌤 Medium (4×4)
+    </a>
+    <a href="/puzzle/{{ photo.pk | e }}/hard"
+       style="text-decoration:none;"
+       class="like-btn">
+      🌑 Hard (5×5)
+    </a>
+  </div>
+</div>
+{% endblock %}
