@@ -63,15 +63,22 @@
     var p = PHOTOS[id];
     if (!p) return;
     document.getElementById('lb-img').src      = p.src;
+    document.getElementById('lb-img').alt = 'Sunset at ' + p.location;
     document.getElementById('lb-location').textContent = p.location;
     document.getElementById('lb-story').textContent    = p.story;
     document.getElementById('lb-date').textContent     = p.date;
 
-    // Like button
-    document.getElementById('lb-like').innerHTML =
-      '<button class="like-btn" hx-post="/like/photo/' + id + '" hx-target="this" hx-swap="outerHTML">' +
-      '<span class="heart">❤</span> ' + p.likeCount + '</button>';
-    htmx.process(document.getElementById('lb-like'));
+    // Like button — use DOM creation to avoid XSS via photo id
+    var likeContainer = document.getElementById('lb-like');
+    likeContainer.innerHTML = '';
+    var btn = document.createElement('button');
+    btn.className = 'like-btn';
+    btn.setAttribute('hx-post', '/like/photo/' + id);
+    btn.setAttribute('hx-target', 'this');
+    btn.setAttribute('hx-swap', 'outerHTML');
+    btn.innerHTML = '<span class="heart">❤</span> ' + p.likeCount;
+    likeContainer.appendChild(btn);
+    htmx.process(likeContainer);
 
     // Comments
     var commentForm = document.getElementById('lb-comment-form');
