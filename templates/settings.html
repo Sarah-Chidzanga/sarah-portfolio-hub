@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Settings — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Settings</h1>
+<p class="section-subtitle">Customise how the site looks for you. Saved in your browser.</p>
+
+<div class="settings-section">
+  <h3>🎨 Appearance</h3>
+
+  <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">Theme</p>
+  <div class="theme-options">
+    <div class="theme-option" data-theme="light" onclick="SarahSettings.setTheme('light')">
+      <div style="font-size: 1.5rem;">☀️</div>
+      <div style="margin-top: 0.4rem; font-size: 0.85rem;">Light</div>
+    </div>
+    <div class="theme-option" data-theme="natural" onclick="SarahSettings.setTheme('natural')">
+      <div style="font-size: 1.5rem;">🌿</div>
+      <div style="margin-top: 0.4rem; font-size: 0.85rem;">Natural</div>
+    </div>
+    <div class="theme-option" data-theme="dark" onclick="SarahSettings.setTheme('dark')">
+      <div style="font-size: 1.5rem;">🌙</div>
+      <div style="margin-top: 0.4rem; font-size: 0.85rem;">Dark</div>
+    </div>
+  </div>
+
+  <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">Accent Colour</p>
+  <div class="accent-options">
+    <div class="accent-swatch" data-accent="amber"  style="background:#f59e0b;" onclick="SarahSettings.setAccent('amber')"  title="Amber"></div>
+    <div class="accent-swatch" data-accent="rust"   style="background:#ef4444;" onclick="SarahSettings.setAccent('rust')"   title="Rust"></div>
+    <div class="accent-swatch" data-accent="violet" style="background:#8b5cf6;" onclick="SarahSettings.setAccent('violet')" title="Violet"></div>
+    <div class="accent-swatch" data-accent="sage"   style="background:#10b981;" onclick="SarahSettings.setAccent('sage')"   title="Sage"></div>
+    <div class="accent-swatch" data-accent="blue"   style="background:#3b82f6;" onclick="SarahSettings.setAccent('blue')"   title="Blue"></div>
+  </div>
+
+  <p style="margin-top: 1rem; font-size: 0.78rem; color: var(--text-secondary);">
+    Each visitor picks their own preference — it doesn't change what others see.
+  </p>
+</div>
+
+<script>
+  // Mark the active theme and accent on page load
+  document.addEventListener('DOMContentLoaded', function () {
+    var c = SarahSettings.current();
+    document.querySelectorAll('.theme-option').forEach(function (el) {
+      el.classList.toggle('active', el.dataset.theme === c.theme);
+    });
+    document.querySelectorAll('.accent-swatch').forEach(function (el) {
+      el.classList.toggle('active', el.dataset.accent === c.accent);
+    });
+  });
+</script>
+{% endblock %}
