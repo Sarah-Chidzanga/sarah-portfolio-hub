@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Contact — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Get in Touch</h1>
+<p class="section-subtitle">I'd love to hear from you.</p>
+
+<div class="card" style="max-width:500px;">
+  <div style="display:flex; flex-direction:column; gap:1.25rem;">
+    <div>
+      <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.05em;">Email</div>
+      <a href="mailto:sarah.chidzanga@jamf.com" style="font-size:1rem;">sarah.chidzanga@jamf.com</a>
+    </div>
+    <div>
+      <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.05em;">LinkedIn</div>
+      <a href="https://linkedin.com/in/sarah-chidzanga" target="_blank" rel="noopener">linkedin.com/in/sarah-chidzanga</a>
+    </div>
+    <div>
+      <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.05em;">Slack</div>
+      <span style="color:var(--text-primary);">@sarah.chidzanga</span>
+      <span style="color:var(--text-secondary); font-size:0.82rem;"> · Jamf workspace</span>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top:1.5rem; color:var(--text-secondary); font-size:0.875rem;">
+  Or leave a message in the <a href="/#guestbook">guestbook</a> on the home page.
+</p>
+{% endblock %}
