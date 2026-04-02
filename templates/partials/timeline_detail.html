@@ -1,0 +1,25 @@
+{% if is_open %}
+<div class="timeline-detail" style="display: block;">
+  <p style="color: var(--text-secondary);">{{ milestone.detail }}</p>
+  <div style="margin-top: 0.75rem;">
+    {% for tag in milestone.tags %}
+      <span class="tag">{{ tag }}</span>
+    {% endfor %}
+  </div>
+  {% if milestone.links %}
+    <div style="margin-top: 0.75rem;">
+      {% for link in milestone.links %}
+        <a href="{{ link.href }}">{{ link.label }} →</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <button style="margin-top:0.75rem; background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.85rem;"
+          hx-get="/timeline/{{ milestone.id }}/detail?open=false"
+          hx-target="#detail-{{ milestone.id }}"
+          hx-swap="outerHTML">
+    ↑ Collapse
+  </button>
+</div>
+{% else %}
+<div id="detail-{{ milestone.id }}"></div>
+{% endif %}

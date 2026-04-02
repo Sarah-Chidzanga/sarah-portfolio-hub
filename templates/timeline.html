@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Timeline — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Life & Projects Timeline</h1>
+<p class="section-subtitle">The phases of my journey so far.</p>
+
+<div class="timeline">
+  {% for m in milestones %}
+  <div class="timeline-item" id="milestone-{{ m.id }}">
+    <div class="timeline-dot"></div>
+    <div style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 0.25rem;">{{ m.year }}</div>
+    <h3 style="cursor: pointer;"
+        hx-get="/timeline/{{ m.id }}/detail?open=true"
+        hx-target="#detail-{{ m.id }}"
+        hx-swap="outerHTML">
+      {{ m.title }}
+      <span style="color: var(--accent); font-size: 0.8rem; margin-left: 0.5rem;">▾</span>
+    </h3>
+    <p style="color: var(--text-secondary); margin-top: 0.25rem;">{{ m.summary }}</p>
+    <div id="detail-{{ m.id }}"></div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
