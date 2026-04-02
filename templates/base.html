@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="amber">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Sarah Chidzanga{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="/" class="nav-brand">✦ Sarah Chidzanga</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/timeline">Timeline</a>
+      <a href="/projects">Projects</a>
+      <a href="/sunsets">Sunsets</a>
+      <a href="/books">Books</a>
+      <a href="/hobbies">Hobbies</a>
+      <a href="/family">Family</a>
+      <a href="/contact">Contact</a>
+      <a href="/settings">⚙️</a>
+    </div>
+    <div hx-get="/visits/global"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+      <span class="visit-pill">🌍 ...</span>
+    </div>
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+</body>
+</html>
