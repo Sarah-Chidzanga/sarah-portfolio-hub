@@ -1,0 +1,6 @@
+<button class="like-btn{% if liked %} liked{% endif %}"
+        hx-post="/like/{{ target_type }}/{{ target_id }}"
+        hx-target="this"
+        hx-swap="outerHTML">
+  <span class="heart">❤</span> {{ count | int }}
+</button>

@@ -1,0 +1,8 @@
+{% for comment in comments %}
+<div class="comment-item">
+  <div class="comment-author">{{ comment.author | e }}</div>
+  <div class="comment-body">{{ comment.body | e }}</div>
+</div>
+{% else %}
+<p style="color: var(--text-secondary); font-size: 0.9rem;">No comments yet — be the first!</p>
+{% endfor %}
