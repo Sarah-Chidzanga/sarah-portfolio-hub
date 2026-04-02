@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Sarah Chidzanga — Hub{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Hi, I'm <span>Sarah Chidzanga</span> ✦</h1>
+  <p style="font-size: 1.15rem; color: var(--text-secondary); margin-top: 0.75rem; max-width: 600px;">
+    Integration Engineering Intern at Jamf. Student builder from MCRI Vic Falls.
+    Sunset chaser, reader, and proud family person.
+  </p>
+  <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+    <a href="/timeline" class="like-btn" style="text-decoration:none;">⏳ My Timeline</a>
+    <a href="/projects" class="like-btn" style="text-decoration:none;">🛠 Projects</a>
+    <a href="/sunsets"  class="like-btn" style="text-decoration:none;">🌅 Sunset Gallery</a>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Guestbook</h2>
+  <p class="section-subtitle">Leave a message — I'd love to hear from you.</p>
+
+  <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
+    {% with target_type='home', target_id='home', count=like_count, liked=false %}
+      {% include 'partials/like_button.html' %}
+    {% endwith %}
+    <span style="color: var(--text-secondary); font-size:0.85rem;">people have liked this page</span>
+  </div>
+
+  <form class="comment-form"
+        hx-post="/comment/home"
+        hx-target="#comment-list"
+        hx-swap="innerHTML"
+        hx-on::after-request="this.reset()">
+    <input type="text" name="author" placeholder="Your name" maxlength="80">
+    <textarea name="body" placeholder="Say hello, share a thought..." maxlength="500"></textarea>
+    <button type="submit">Post message</button>
+  </form>
+
+  <div id="comment-list">
+    {% include 'partials/comment_list.html' %}
+  </div>
+</section>
+{% endblock %}
