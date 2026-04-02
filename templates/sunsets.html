@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Sunsets — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Sunset Gallery</h1>
+<p class="section-subtitle">Every sunset tells a story. Click any photo to read mine.</p>
+
+{% if photos %}
+<div class="masonry-grid">
+  {% for photo in photos %}
+  <div class="masonry-item" onclick="openLightbox('{{ photo.pk | e }}')">
+    <img src="{{ photo.s3_url | e }}"
+         alt="Sunset at {{ photo.location | e }}"
+         loading="lazy">
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p style="color: var(--text-secondary);">Photos coming soon.</p>
+{% endif %}
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox hidden" onclick="closeLightbox(event)">
+  <span class="lightbox-close" onclick="closeLightbox(null)">&times;</span>
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <img id="lb-img" src="" alt="">
+    <div class="lightbox-info">
+      <h3 id="lb-location" style="color:var(--accent);"></h3>
+      <p id="lb-story"    style="color:var(--text-secondary); margin: 0.5rem 0 1rem;"></p>
+      <p id="lb-date"     style="color:var(--text-secondary); font-size:0.8rem; margin-bottom:1rem;"></p>
+
+      <div id="lb-like"></div>
+
+      <h4 style="margin:1rem 0 0.5rem;">Comments</h4>
+      <form class="comment-form"
+            id="lb-comment-form"
+            hx-target="#lb-comments"
+            hx-swap="innerHTML"
+            hx-on::after-request="this.reset()">
+        <input type="text" name="author" placeholder="Your name" maxlength="80">
+        <textarea name="body" placeholder="What does this sunset mean to you?" maxlength="500"></textarea>
+        <button type="submit">Post</button>
+      </form>
+      <div id="lb-comments"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var PHOTOS = {
+    {% for photo in photos %}
+    "{{ photo.pk | e }}": {
+      src:      "{{ photo.s3_url | e }}",
+      location: "{{ photo.location | e }}",
+      story:    "{{ photo.story | e | replace('\n', ' ') }}",
+      date:     "{{ photo.taken_at | e }}",
+      likeCount: {{ photo.like_count | default(0) | int }}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  };
+
+  function openLightbox(id) {
+    var p = PHOTOS[id];
+    if (!p) return;
+    document.getElementById('lb-img').src      = p.src;
+    document.getElementById('lb-location').textContent = p.location;
+    document.getElementById('lb-story').textContent    = p.story;
+    document.getElementById('lb-date').textContent     = p.date;
+
+    // Like button
+    document.getElementById('lb-like').innerHTML =
+      '<button class="like-btn" hx-post="/like/photo/' + id + '" hx-target="this" hx-swap="outerHTML">' +
+      '<span class="heart">❤</span> ' + p.likeCount + '</button>';
+    htmx.process(document.getElementById('lb-like'));
+
+    // Comments
+    var commentForm = document.getElementById('lb-comment-form');
+    commentForm.setAttribute('hx-post', '/comment/photo/' + id);
+    htmx.process(commentForm);
+    fetch('/sunsets/' + id + '/comments')
+      .then(r => r.text())
+      .then(html => { document.getElementById('lb-comments').innerHTML = html; });
+
+    document.getElementById('lightbox').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(event) {
+    if (event && event.target !== document.getElementById('lightbox')) return;
+    document.getElementById('lightbox').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+</script>
+{% endblock %}
