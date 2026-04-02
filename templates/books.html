@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Books — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Reading List</h1>
+<p class="section-subtitle">Books I'm reading and thinking about.</p>
+
+{% if currently_reading %}
+<h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent);">Currently Reading</h2>
+{% for book in currently_reading %}
+<div class="book-item">
+  <div style="flex:1;">
+    <div style="font-weight:600;">{{ book.title }}</div>
+    <div style="color:var(--text-secondary); font-size:0.85rem;">{{ book.author }}</div>
+    {% if book.reflection %}
+    <div style="color:var(--text-secondary); font-size:0.875rem; margin-top:0.4rem; font-style:italic;">"{{ book.reflection }}"</div>
+    {% endif %}
+  </div>
+  <span class="book-status">Reading</span>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if have_read %}
+<h2 style="font-size:1.15rem; margin:2rem 0 1rem; color:var(--accent);">Have Read</h2>
+{% for book in have_read %}
+<div class="book-item">
+  <div style="flex:1;">
+    <div style="font-weight:600;">{{ book.title }}</div>
+    <div style="color:var(--text-secondary); font-size:0.85rem;">{{ book.author }}</div>
+    {% if book.reflection %}
+    <div style="color:var(--text-secondary); font-size:0.875rem; margin-top:0.4rem; font-style:italic;">"{{ book.reflection }}"</div>
+    {% endif %}
+  </div>
+  <span class="book-status" style="background:rgba(255,255,255,0.05); color:var(--text-secondary);">Read ✓</span>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if not currently_reading and not have_read %}
+<p style="color: var(--text-secondary);">Books coming soon.</p>
+{% endif %}
+{% endblock %}
