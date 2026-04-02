@@ -1,0 +1,52 @@
+name: Deploy to AWS Lambda
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run tests
+        env:
+          AWS_ACCESS_KEY_ID: testing
+          AWS_SECRET_ACCESS_KEY: testing
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_REGION: us-east-1
+        run: |
+          pip install -r requirements.txt --quiet
+          pytest tests/ -v
+
+      - name: Build deployment package
+        run: bash package.sh
+
+      - name: Deploy to AWS Lambda
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          pip install awscli --quiet
+          aws lambda update-function-code \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://app.zip \
+            --region ${{ secrets.AWS_REGION }}
+
+      - name: Notify on success
+        if: success()
+        run: echo "✅ Deploy succeeded — $(git rev-parse --short HEAD) is live on prod Lambda."
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "❌ Deploy failed — check the logs above."
