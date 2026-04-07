@@ -153,6 +153,35 @@
     return d;
   }
 
+  // Builds one SVG <clipPath> per tile and appends them to <body>.
+  // IDs are 'jigsaw-R-C' based on solved position (row, col).
+  // clipPathUnits="userSpaceOnUse" means coordinates are in the tile div's own space.
+  function injectClipPaths(rows, cols, edges, cs, s) {
+    var existing = document.getElementById('jigsaw-clips');
+    if (existing) existing.parentNode.removeChild(existing);
+
+    var ns   = 'http://www.w3.org/2000/svg';
+    var svg  = document.createElementNS(ns, 'svg');
+    svg.id   = 'jigsaw-clips';
+    svg.setAttribute('style', 'position:absolute;width:0;height:0;overflow:hidden');
+    var defs = document.createElementNS(ns, 'defs');
+
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var cp   = document.createElementNS(ns, 'clipPath');
+        cp.setAttribute('id', 'jigsaw-' + r + '-' + c);
+        cp.setAttribute('clipPathUnits', 'userSpaceOnUse');
+        var path = document.createElementNS(ns, 'path');
+        path.setAttribute('d', tilePathData(r, c, rows, cols, edges, cs, s));
+        cp.appendChild(path);
+        defs.appendChild(cp);
+      }
+    }
+
+    svg.appendChild(defs);
+    document.body.appendChild(svg);
+  }
+
   function buildBoard() {
     var board = document.getElementById('puzzle-board');
     board.innerHTML = '';
