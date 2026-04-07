@@ -37,7 +37,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
         run: |
-          pip install awscli --quiet
           aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/app.zip --region us-east-1
           aws lambda update-function-code \
             --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
