@@ -60,6 +60,36 @@
   // tile order: tiles[i] = the solved-position index of the tile currently at slot i
   var tiles = [];
 
+  // Returns an object of edge keys → 'tab' or 'blank'.
+  // 'h-R-C' = horizontal edge between row R and row R+1, at column C.
+  // 'v-R-C' = vertical edge between col C and col C+1, at row R.
+  // The tile ABOVE/LEFT of each internal edge is 'tab-out' when value='tab',
+  // the tile BELOW/RIGHT is 'blank-in' (and vice-versa when value='blank').
+  function generateEdges(rows, cols) {
+    var edges = {};
+    for (var r = 0; r < rows - 1; r++) {
+      for (var c = 0; c < cols; c++) {
+        edges['h-' + r + '-' + c] = Math.random() < 0.5 ? 'tab' : 'blank';
+      }
+    }
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols - 1; c++) {
+        edges['v-' + r + '-' + c] = Math.random() < 0.5 ? 'tab' : 'blank';
+      }
+    }
+    return edges;
+  }
+
+  // Returns {top, right, bottom, left} each = 'straight' | 'tab-out' | 'blank-in'.
+  function getTileEdges(row, col, rows, cols, edges) {
+    return {
+      top:    row === 0      ? 'straight' : (edges['h-'+(row-1)+'-'+col]  === 'tab' ? 'blank-in' : 'tab-out'),
+      bottom: row === rows-1 ? 'straight' : (edges['h-'+row+'-'+col]      === 'tab' ? 'tab-out'  : 'blank-in'),
+      left:   col === 0      ? 'straight' : (edges['v-'+row+'-'+(col-1)]  === 'tab' ? 'blank-in' : 'tab-out'),
+      right:  col === cols-1 ? 'straight' : (edges['v-'+row+'-'+col]      === 'tab' ? 'tab-out'  : 'blank-in')
+    };
+  }
+
   function buildBoard() {
     var board = document.getElementById('puzzle-board');
     board.innerHTML = '';
