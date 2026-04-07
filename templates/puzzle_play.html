@@ -231,13 +231,13 @@
   function onDragStart(e) {
     dragSourceIndex = parseInt(e.currentTarget.dataset.slotIndex);
     e.currentTarget.style.opacity = '0.45';
-    e.dataTransfer.effectAllowed = 'move';
+    e.currentTarget.style.zIndex  = '10';
+    e.dataTransfer.effectAllowed  = 'move';
   }
 
   function onDragOver(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-    e.currentTarget.style.transform = 'scale(1.05)';
   }
 
   function onDrop(e) {
@@ -258,12 +258,8 @@
 
   function onDragEnd(e) {
     e.currentTarget.style.opacity = '1';
-    e.currentTarget.style.transform = '';
+    e.currentTarget.style.zIndex  = '1';
     dragSourceIndex = null;
-    // Reset all scale transforms in case dragend fires before buildBoard
-    document.querySelectorAll('#puzzle-board > div').forEach(function(t) {
-      t.style.transform = '';
-    });
   }
 
   function checkSolved() {
