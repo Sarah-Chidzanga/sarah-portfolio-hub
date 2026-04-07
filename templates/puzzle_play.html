@@ -187,23 +187,38 @@
   }
 
   function makeTile(solvedIdx, slotIdx) {
-    var tileW = 100 / COLS;
-    var tileH = 100 / ROWS;
-    var col = solvedIdx % COLS;
-    var row = Math.floor(solvedIdx / COLS);
+    var cs       = CELL_SIZE;
+    var s        = TAB_SIZE;
+    var col      = solvedIdx % COLS;
+    var row      = Math.floor(solvedIdx / COLS);
+    var slotCol  = slotIdx % COLS;
+    var slotRow  = Math.floor(slotIdx / COLS);
+    var tileSize = cs + 2 * s;
 
     var div = document.createElement('div');
-    div.dataset.slotIndex = slotIdx;
+    div.dataset.slotIndex  = slotIdx;
     div.dataset.solvedIndex = solvedIdx;
     div.draggable = true;
+
+    // background-position: shift the full photo so the correct region
+    // appears inside the tile's cell area (which starts at offset s,s within the div).
+    var bgX = s - col * cs;
+    var bgY = s - row * cs;
+
     div.style.cssText = [
+      'position: absolute;',
+      'left: '   + (slotCol * cs - s) + 'px;',
+      'top: '    + (slotRow * cs - s) + 'px;',
+      'width: '  + tileSize + 'px;',
+      'height: ' + tileSize + 'px;',
       'background-image: url(' + PHOTO_URL + ');',
-      'background-size: ' + (COLS * 100) + '% ' + (ROWS * 100) + '%;',
-      'background-position: ' + (col * 100 / (COLS - 1 || 1)) + '% ' + (row * 100 / (ROWS - 1 || 1)) + '%;',
-      'border-radius: 4px;',
+      'background-size: ' + (COLS * cs) + 'px ' + (ROWS * cs) + 'px;',
+      'background-position: ' + bgX + 'px ' + bgY + 'px;',
+      'clip-path: url(#jigsaw-' + row + '-' + col + ');',
+      '-webkit-clip-path: url(#jigsaw-' + row + '-' + col + ');',
       'cursor: grab;',
-      'transition: opacity 0.15s, transform 0.1s;',
-      'aspect-ratio: 1;',
+      'z-index: 1;',
+      'transition: opacity 0.15s;',
     ].join('');
 
     div.addEventListener('dragstart', onDragStart);
