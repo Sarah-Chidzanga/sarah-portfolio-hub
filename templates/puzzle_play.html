@@ -90,6 +90,69 @@
     };
   }
 
+  // Returns SVG path 'd' string for the jigsaw piece at (row, col).
+  // cs = cellSize (px), s = tabSize (px, = cs * 0.18).
+  // Tile div is (cs+2s) × (cs+2s). Cell area corners: TL=(s,s), TR=(s+cs,s), BR=(s+cs,s+cs), BL=(s,s+cs).
+  // tab-out protrudes AWAY from the cell centre; blank-in cuts INTO it.
+  function tilePathData(row, col, rows, cols, edges, cs, s) {
+    var te  = getTileEdges(row, col, rows, cols, edges);
+    var hw  = cs * 0.15;          // half-tab-width  (tab width = cs*0.3)
+    var midX = s + cs / 2;
+    var midY = s + cs / 2;
+    var d = 'M ' + s + ',' + s + ' ';
+
+    // Top edge — left to right at y=s
+    if (te.top === 'straight') {
+      d += 'L ' + (s + cs) + ',' + s + ' ';
+    } else {
+      var depth = te.top === 'tab-out' ? -s : s;  // negative = up (outward)
+      d += 'L ' + (midX - hw) + ',' + s + ' ';
+      d += 'C ' + (midX - hw) + ',' + (s + depth) + ' '
+               + (midX + hw) + ',' + (s + depth) + ' '
+               + (midX + hw) + ',' + s + ' ';
+      d += 'L ' + (s + cs) + ',' + s + ' ';
+    }
+
+    // Right edge — top to bottom at x=s+cs
+    if (te.right === 'straight') {
+      d += 'L ' + (s + cs) + ',' + (s + cs) + ' ';
+    } else {
+      var depth = te.right === 'tab-out' ? s : -s;  // positive = right (outward)
+      d += 'L ' + (s + cs) + ',' + (midY - hw) + ' ';
+      d += 'C ' + (s + cs + depth) + ',' + (midY - hw) + ' '
+               + (s + cs + depth) + ',' + (midY + hw) + ' '
+               + (s + cs) + ',' + (midY + hw) + ' ';
+      d += 'L ' + (s + cs) + ',' + (s + cs) + ' ';
+    }
+
+    // Bottom edge — right to left at y=s+cs
+    if (te.bottom === 'straight') {
+      d += 'L ' + s + ',' + (s + cs) + ' ';
+    } else {
+      var depth = te.bottom === 'tab-out' ? s : -s;  // positive = down (outward)
+      d += 'L ' + (midX + hw) + ',' + (s + cs) + ' ';
+      d += 'C ' + (midX + hw) + ',' + (s + cs + depth) + ' '
+               + (midX - hw) + ',' + (s + cs + depth) + ' '
+               + (midX - hw) + ',' + (s + cs) + ' ';
+      d += 'L ' + s + ',' + (s + cs) + ' ';
+    }
+
+    // Left edge — bottom to top at x=s
+    if (te.left === 'straight') {
+      d += 'L ' + s + ',' + s + ' ';
+    } else {
+      var depth = te.left === 'tab-out' ? -s : s;  // negative = left (outward)
+      d += 'L ' + s + ',' + (midY + hw) + ' ';
+      d += 'C ' + (s + depth) + ',' + (midY + hw) + ' '
+               + (s + depth) + ',' + (midY - hw) + ' '
+               + s + ',' + (midY - hw) + ' ';
+      d += 'L ' + s + ',' + s + ' ';
+    }
+
+    d += 'Z';
+    return d;
+  }
+
   function buildBoard() {
     var board = document.getElementById('puzzle-board');
     board.innerHTML = '';
