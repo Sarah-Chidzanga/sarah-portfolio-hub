@@ -14,16 +14,12 @@
   <div>
     <div id="puzzle-board"
          style="
-           display: grid;
-           grid-template-columns: repeat({{ cols }}, 1fr);
-           gap: 3px;
+           position: relative;
            width: min(480px, 90vw);
-           aspect-ratio: 1;
            background: var(--bg-secondary);
            border-radius: 8px;
-           padding: 3px;
-         ">
-    </div>
+           overflow: visible;
+         "></div>
 
     <div style="display:flex; gap:0.75rem; margin-top:1rem; flex-wrap:wrap;">
       <button class="like-btn" onclick="shufflePuzzle()" style="flex:1;">🔀 Shuffle</button>
@@ -290,6 +286,17 @@
   }
 
   // Initialise
+  var board       = document.getElementById('puzzle-board');
+  var BOARD_SIZE  = Math.min(480, Math.floor(window.innerWidth * 0.9));
+  var CELL_SIZE   = Math.floor(BOARD_SIZE / COLS);
+  var TAB_SIZE    = Math.round(CELL_SIZE * 0.18);
+  var EDGES       = generateEdges(ROWS, COLS);
+
+  board.style.width  = (COLS * CELL_SIZE) + 'px';
+  board.style.height = (ROWS * CELL_SIZE) + 'px';
+
+  injectClipPaths(ROWS, COLS, EDGES, CELL_SIZE, TAB_SIZE);
+
   for (var i = 0; i < ROWS * COLS; i++) { tiles.push(i); }
   shufflePuzzle();
 </script>
