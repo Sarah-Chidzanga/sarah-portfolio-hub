@@ -258,6 +258,9 @@
 
   function onDragEnd(e) {
     e.currentTarget.style.opacity = '1';
+    // On a successful drop, buildBoard() has already replaced this node; the
+    // zIndex reset below fires on the detached element (harmless). On a cancelled
+    // drag the node is still live and the reset is needed.
     e.currentTarget.style.zIndex  = '1';
     dragSourceIndex = null;
   }
