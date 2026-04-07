@@ -18,13 +18,15 @@
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
         <h3 style="font-size:1rem;">{{ project.title }}</h3>
-        <span class="phase-badge">{{ project.current_phase }}</span>
+        {% if project.current_phase %}<span class="phase-badge">{{ project.current_phase }}</span>{% endif %}
       </div>
       <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom:0.75rem;">{{ project.description }}</p>
       <div>
-        {% for tech in project.tech_stack %}
-          <span class="tag">{{ tech }}</span>
-        {% endfor %}
+        {% if project.tech %}
+          {% for tech in project.tech.split(',') %}
+            <span class="tag">{{ tech.strip() }}</span>
+          {% endfor %}
+        {% endif %}
       </div>
       <div style="margin-top:0.75rem; color:var(--text-secondary); font-size:0.82rem;">
         ❤ {{ project.like_count | default(0) | int }}
