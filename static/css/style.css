@@ -1,14 +1,14 @@
 /* ── Theme variables ───────────────────────────────────────── */
 :root {
-  --bg-primary:    #FDE8EF;
-  --bg-secondary:  #F9D5E0;
+  --bg-primary:    #F8F6FA;
+  --bg-secondary:  #EEEcF4;
   --bg-card:       #FFFFFF;
-  --text-primary:  #3D1F0D;
-  --text-secondary:#6B6D43;
+  --text-primary:  #2A1A3A;
+  --text-secondary:#6A5A7A;
   --accent:        #CF7D65;
   --accent-hover:  #B85E4A;
-  --border:        #F0C0CC;
-  --shadow:        0 2px 12px rgba(180,80,100,0.1);
+  --border:        #DCD8E8;
+  --shadow:        0 2px 12px rgba(42,26,58,0.08);
 }
 
 [data-theme="dark"] {
