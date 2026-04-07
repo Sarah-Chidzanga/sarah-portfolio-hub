@@ -179,7 +179,6 @@
   }
 
   function buildBoard() {
-    var board = document.getElementById('puzzle-board');
     board.innerHTML = '';
     tiles.forEach(function(solvedIdx, slotIdx) {
       var tile = makeTile(solvedIdx, slotIdx);
