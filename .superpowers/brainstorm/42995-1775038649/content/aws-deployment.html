@@ -1,0 +1,104 @@
+<h2>AWS Console Deployment</h2>
+<p class="subtitle">Design Section 4 of 4 — Step-by-step through the AWS GUI. No CLI needed.</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(245,158,11,0.15);">Step 1 — S3 Bucket (photo storage)</div>
+    <div class="mockup-body" style="font-size:0.81rem; line-height:1.8; color:#ccc;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">AWS Console → S3 → Create bucket</div>
+      <div>• Name: <code>sarah-portfolio-photos</code></div>
+      <div>• Region: <code>us-east-1</code> (or closest to you)</div>
+      <div>• Uncheck "Block all public access" for photos</div>
+      <div>• Add a bucket policy to allow public reads</div>
+      <div style="margin-top:0.5rem; color:#888; font-size:0.75rem;">Upload sunset photos here — the URL goes into DynamoDB as <code>s3_url</code>.</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(245,158,11,0.15);">Step 2 — DynamoDB Tables (×5)</div>
+    <div class="mockup-body" style="font-size:0.81rem; line-height:1.8; color:#ccc;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">AWS Console → DynamoDB → Create table</div>
+      <div>Create each table with:</div>
+      <div>• Partition key: <code>pk</code> (String)</div>
+      <div>• <code>comments</code> also needs sort key: <code>sk</code> (String)</div>
+      <div>• Capacity: On-demand (pay per request — free tier friendly)</div>
+      <div style="margin-top:0.5rem; color:#888; font-size:0.75rem;">Repeat for: projects · sunset_photos · books · comments · page_visits</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(245,158,11,0.15);">Step 3 — IAM Role for Lambda</div>
+    <div class="mockup-body" style="font-size:0.81rem; line-height:1.8; color:#ccc;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">AWS Console → IAM → Roles → Create role</div>
+      <div>• Trusted entity: <code>Lambda</code></div>
+      <div>• Attach policies:</div>
+      <div style="padding-left:0.8rem;">— <code>AmazonDynamoDBFullAccess</code></div>
+      <div style="padding-left:0.8rem;">— <code>AmazonS3ReadOnlyAccess</code></div>
+      <div style="padding-left:0.8rem;">— <code>AWSLambdaBasicExecutionRole</code></div>
+      <div>• Name: <code>sarah-portfolio-lambda-role</code></div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(245,158,11,0.15);">Step 4 — Lambda Function</div>
+    <div class="mockup-body" style="font-size:0.81rem; line-height:1.8; color:#ccc;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">AWS Console → Lambda → Create function</div>
+      <div>• Runtime: <code>Python 3.12</code></div>
+      <div>• Execution role: <code>sarah-portfolio-lambda-role</code></div>
+      <div>• Upload code as a <code>.zip</code> file:</div>
+      <div style="padding-left:0.8rem; color:#888; font-size:0.75rem;">zip -r app.zip app.py lambda_handler.py routes/ templates/ static/ db.py requirements/ site-packages/</div>
+      <div>• Handler: <code>lambda_handler.handler</code></div>
+      <div>• Memory: 256 MB · Timeout: 30s</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(245,158,11,0.15);">Step 5 — API Gateway</div>
+    <div class="mockup-body" style="font-size:0.81rem; line-height:1.8; color:#ccc;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">AWS Console → API Gateway → Create API</div>
+      <div>• Type: <code>HTTP API</code> (simpler + cheaper than REST)</div>
+      <div>• Integration: Lambda → your function</div>
+      <div>• Route: <code>ANY /{proxy+}</code> → catches all routes</div>
+      <div>• Deploy to stage: <code>prod</code></div>
+      <div style="margin-top:0.5rem; color:#f59e0b; font-size:0.78rem;">→ You get a public URL like: https://abc123.execute-api.us-east-1.amazonaws.com</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(245,158,11,0.15);">Step 6 — Custom Domain (optional)</div>
+    <div class="mockup-body" style="font-size:0.81rem; line-height:1.8; color:#ccc;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">AWS Console → Route 53 or API Gateway → Custom domains</div>
+      <div>• Buy a domain in Route 53 (e.g. <code>sarahchidzanga.com</code>)</div>
+      <div>• Request an SSL cert in <code>ACM</code> (free)</div>
+      <div>• Map domain → API Gateway stage</div>
+      <div style="margin-top:0.5rem; color:#888; font-size:0.75rem;">Optional but makes the portfolio feel professional. Can skip for now and add later.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockup" style="margin-top:1rem;">
+  <div class="mockup-header">Deployment Order Summary</div>
+  <div class="mockup-body" style="font-size:0.82rem;">
+    <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; color:#ccc;">
+      <span style="background:#1a3a1a; border:1px solid #2a5a2a; padding:4px 10px; border-radius:4px;">1. S3 bucket</span>
+      <span style="color:#f59e0b;">→</span>
+      <span style="background:#1a3a1a; border:1px solid #2a5a2a; padding:4px 10px; border-radius:4px;">2. DynamoDB tables (×5)</span>
+      <span style="color:#f59e0b;">→</span>
+      <span style="background:#1a3a1a; border:1px solid #2a5a2a; padding:4px 10px; border-radius:4px;">3. IAM role</span>
+      <span style="color:#f59e0b;">→</span>
+      <span style="background:#1a3a1a; border:1px solid #2a5a2a; padding:4px 10px; border-radius:4px;">4. Lambda function</span>
+      <span style="color:#f59e0b;">→</span>
+      <span style="background:#1a3a1a; border:1px solid #2a5a2a; padding:4px 10px; border-radius:4px;">5. API Gateway</span>
+      <span style="color:#f59e0b;">→</span>
+      <span style="background:#1a3a1a; border:1px solid #2a5a2a; padding:4px 10px; border-radius:4px;">6. Custom domain (optional)</span>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:1rem; padding: 1rem; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.08); border-radius: 0 6px 6px 0; font-size:0.82rem;">
+  <strong>Re-deploying after code changes:</strong> Zip your updated files → Lambda → Upload from → .zip file. That's it — no CLI needed. We'll include a simple shell script <code>package.sh</code> that creates the zip for you so it's one step.
+</div>
+
+<p class="subtitle" style="margin-top:1rem;">Happy with the deployment plan? Say yes and I'll write up the full design doc.</p>

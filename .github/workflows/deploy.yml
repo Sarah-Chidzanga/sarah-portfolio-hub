@@ -38,9 +38,11 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
         run: |
           pip install awscli --quiet
+          aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/app.zip --region ${{ secrets.AWS_REGION }}
           aws lambda update-function-code \
             --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
-            --zip-file fileb://app.zip \
+            --s3-bucket ${{ secrets.S3_BUCKET }} \
+            --s3-key app.zip \
             --region ${{ secrets.AWS_REGION }}
 
       - name: Notify on success

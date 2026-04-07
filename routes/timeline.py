@@ -6,7 +6,7 @@ timeline_bp = Blueprint('timeline', __name__)
 MILESTONES = [
     {
         'id': 'mcri-student',
-        'year': '2021 – 2023',
+        'year': '2025 – 2026',
         'title': 'Student at MCRI, Victoria Falls',
         'summary': 'Built my first apps, discovered a love for software.',
         'detail': (
@@ -15,12 +15,12 @@ MILESTONES = [
             'that I love building things that solve real problems. I learned Python, '
             'basic web development, and how to think like an engineer.'
         ),
-        'tags': ['Python', 'Web Dev', 'Student Projects'],
+        'tags': ['Swift', 'Confluence', 'Student Projects'],
         'links': [],
     },
     {
         'id': 'jamf-internship',
-        'year': '2024 – Present',
+        'year': '2026  – Present',
         'title': 'Integration Engineering Intern — Jamf',
         'summary': 'Working with Jamf Pro, Splunk, and AWS to build integration workflows.',
         'detail': (

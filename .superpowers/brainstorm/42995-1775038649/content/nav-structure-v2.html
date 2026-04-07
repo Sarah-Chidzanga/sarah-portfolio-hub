@@ -1,0 +1,87 @@
+<h2>Navigation & Page Structure — v2</h2>
+<p class="subtitle">Updated: 🌍 visit counter · Settings page added · inspired by your Jamf settings panel</p>
+
+<div class="mockup">
+  <div class="mockup-header">Top Navigation Bar (persistent on all pages)</div>
+  <div class="mockup-body">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding: 0.6rem 1rem; background:#1a1a1a; border-radius:6px;">
+      <span style="color:#f59e0b; font-weight:bold; font-size:1rem;">✦ Sarah Chidzanga</span>
+      <span style="color:#ccc; font-size:0.8rem;">Home &nbsp;|&nbsp; Timeline &nbsp;|&nbsp; Projects &nbsp;|&nbsp; Sunsets &nbsp;|&nbsp; Books &nbsp;|&nbsp; Hobbies &nbsp;|&nbsp; Family &nbsp;|&nbsp; Contact &nbsp;|&nbsp; ⚙️</span>
+      <span style="color:#f59e0b; font-size:0.82rem; background:rgba(245,158,11,0.1); padding:3px 10px; border-radius:20px;">🌍 1,204 visits</span>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:1.2rem;">
+  <h3 style="margin-bottom:0.8rem;">⚙️ Settings Page — <span style="font-weight:normal; opacity:0.6">/settings</span></h3>
+
+  <div class="mockup">
+    <div class="mockup-header">Settings — inspired by your Jamf panel</div>
+    <div class="mockup-body" style="background:#111; border-radius:8px; padding:1.2rem; font-size:0.85rem;">
+
+      <!-- Profile Section -->
+      <div style="border:1px solid #2a2a2a; border-radius:8px; padding:1rem; margin-bottom:1rem; background:#1a1a1a;">
+        <div style="color:#f59e0b; font-weight:600; margin-bottom:0.8rem;">👤 Profile</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; color:#ccc;">
+          <div><div style="font-size:0.72rem; color:#666; margin-bottom:2px;">Name</div>Sarah Chidzanga</div>
+          <div><div style="font-size:0.72rem; color:#666; margin-bottom:2px;">Role</div>Integration Engineering Intern · Jamf</div>
+        </div>
+        <div style="margin-top:0.6rem; font-size:0.75rem; color:#555;">Your public profile shown on the Contact page</div>
+      </div>
+
+      <!-- Appearance Section -->
+      <div style="border:1px solid #2a2a2a; border-radius:8px; padding:1rem; background:#1a1a1a;">
+        <div style="color:#f59e0b; font-weight:600; margin-bottom:0.8rem;">🎨 Appearance</div>
+
+        <div style="font-size:0.78rem; color:#888; margin-bottom:0.5rem;">Theme</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; margin-bottom:1rem;">
+          <div style="border:2px solid #f59e0b; border-radius:6px; padding:0.6rem; text-align:center; background:#2a2a2a;">
+            <div style="font-size:1rem;">☀️</div>
+            <div style="color:#fff; font-size:0.78rem;">Light</div>
+          </div>
+          <div style="border:1px solid #333; border-radius:6px; padding:0.6rem; text-align:center;">
+            <div style="font-size:1rem;">🌿</div>
+            <div style="color:#888; font-size:0.78rem;">Natural</div>
+          </div>
+          <div style="border:1px solid #333; border-radius:6px; padding:0.6rem; text-align:center;">
+            <div style="font-size:1rem;">🌙</div>
+            <div style="color:#888; font-size:0.78rem;">Dark</div>
+          </div>
+        </div>
+
+        <div style="font-size:0.78rem; color:#888; margin-bottom:0.5rem;">Accent Color</div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#f59e0b;border:2px solid #fff;margin:0 auto 3px;"></div>
+            <div style="font-size:0.65rem;color:#888;">Amber ✓</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#ef4444;margin:0 auto 3px;border:2px solid #333;"></div>
+            <div style="font-size:0.65rem;color:#666;">Rust</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#8b5cf6;margin:0 auto 3px;border:2px solid #333;"></div>
+            <div style="font-size:0.65rem;color:#666;">Violet</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#10b981;margin:0 auto 3px;border:2px solid #333;"></div>
+            <div style="font-size:0.65rem;color:#666;">Sage</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#3b82f6;margin:0 auto 3px;border:2px solid #333;"></div>
+            <div style="font-size:0.65rem;color:#666;">Blue</div>
+          </div>
+        </div>
+
+        <div style="margin-top:0.8rem; font-size:0.75rem; color:#555;">Preferences saved in your browser — each visitor picks their own.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:1.2rem; padding: 1rem; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.08); border-radius: 0 6px 6px 0; font-size:0.85rem;">
+  <strong>How it works technically:</strong> Theme + accent color are stored in <code>localStorage</code> (browser) — no server needed. Each visitor gets their own preference. CSS variables swap instantly. The default is Dark + Amber (your "dark and warm" choice).
+</div>
+
+<p class="subtitle" style="margin-top:1rem;">Does this feel right? Any changes to the themes, accent colours, or the profile info shown? Tell me in the terminal.</p>

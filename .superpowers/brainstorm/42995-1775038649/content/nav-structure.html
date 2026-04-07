@@ -1,0 +1,97 @@
+<h2>Navigation & Page Structure</h2>
+<p class="subtitle">Design Section 1 of 4 — Does this information architecture feel right for your story?</p>
+
+<div class="mockup">
+  <div class="mockup-header">Top Navigation Bar (persistent on all pages)</div>
+  <div class="mockup-body">
+    <div class="mock-nav" style="display:flex; justify-content:space-between; align-items:center; padding: 0.5rem 1rem; background:#1a1a1a; border-radius:6px;">
+      <span style="color:#f59e0b; font-weight:bold;">✦ Sarah Chidzanga</span>
+      <span style="color:#ccc; font-size:0.85rem;">Home &nbsp;|&nbsp; Timeline &nbsp;|&nbsp; Projects &nbsp;|&nbsp; Sunsets &nbsp;|&nbsp; Books &nbsp;|&nbsp; Hobbies &nbsp;|&nbsp; Family &nbsp;|&nbsp; Contact</span>
+      <span style="color:#888; font-size:0.8rem;">👁 1,204 visits</span>
+    </div>
+  </div>
+</div>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+
+  <div class="mockup">
+    <div class="mockup-header">🏠 Home <span style="font-weight:normal;opacity:0.7">— / </span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">👋 Hero: short intro + role</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">✦ Highlights: Timeline · Projects · Sunsets</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">💬 Guestbook (comments + likes)</div>
+      <div style="padding:0.4rem 0;">👁 Live visit counter</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">⏳ Timeline <span style="font-weight:normal;opacity:0.7">— /timeline</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📍 MCRI Vic Falls (student era)</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📍 Jamf internship (now)</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📍 Future goals</div>
+      <div style="padding:0.4rem 0;">↳ Each item expands to a card on click (HTMX)</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">🛠 Projects <span style="font-weight:normal;opacity:0.7">— /projects</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">🏷 Filter: Jamf Work · MCRI Apps · All</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📦 Project cards (title, tech, phase badge)</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">↳ /projects/&lt;slug&gt; — detail page</div>
+      <div style="padding:0.4rem 0;">❤ Likes + 💬 Comments per project</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">🌅 Sunsets <span style="font-weight:normal;opacity:0.7">— /sunsets</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">🖼 Masonry photo grid</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">↳ Click → lightbox (location + story)</div>
+      <div style="padding:0.4rem 0;">❤ Likes + 💬 Comments per photo</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">📚 Books <span style="font-weight:normal;opacity:0.7">— /books</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📖 Currently reading</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">✅ Have read (with one-line reflections)</div>
+      <div style="padding:0.4rem 0;">🔗 Linked from Hobbies</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">🎨 Hobbies <span style="font-weight:normal;opacity:0.7">— /hobbies</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📷 Photography → links to Sunsets</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">📚 Reading → links to Books</div>
+      <div style="padding:0.4rem 0;">🌿 Other hobbies as cards</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">👨‍👩‍👧 Family <span style="font-weight:normal;opacity:0.7">— /family</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">🖼 A few warm photos</div>
+      <div style="padding:0.4rem 0;">📝 Short personal description</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">📬 Contact <span style="font-weight:normal;opacity:0.7">— /contact</span></div>
+    <div class="mockup-body" style="font-size:0.82rem;">
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">✉ Email address</div>
+      <div style="padding:0.4rem 0; border-bottom:1px solid #333;">🔗 LinkedIn link</div>
+      <div style="padding:0.4rem 0;">💬 Slack handle (Jamf)</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:1.5rem; padding: 1rem; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.08); border-radius: 0 6px 6px 0; font-size:0.85rem;">
+  <strong>Note:</strong> The nav visit counter (top right) is global. Per-page visits are tracked silently on load via HTMX. Projects and Sunsets have their own likes + comments. Family and Books are read-only (no comments).
+</div>
+
+<p class="subtitle" style="margin-top:1rem;">Does this page structure feel right? Anything to add, remove, or rename? Tell me in the terminal.</p>

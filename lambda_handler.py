@@ -1,5 +1,5 @@
-from mangum import Mangum
+from apig_wsgi import make_lambda_handler
 from app import create_app
 
 _app = create_app()
-handler = Mangum(_app, lifespan='off')
+handler = make_lambda_handler(_app)

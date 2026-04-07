@@ -218,7 +218,18 @@ Comment section at the bottom of the Home page. Visitors enter their name and a 
 
 ---
 
-## 8. Out of Scope
+## 8. Future Features
+
+### Puzzle Piece Shapes
+Currently puzzle tiles are plain rectangles. Two planned enhancements:
+
+**Phase 1 — Shape presets:** Add a shape selector to the puzzle difficulty screen. Options: Classic (rectangles), Diamond (tiles rotated 45°), Hexagon (honeycomb grid). Implemented via CSS `clip-path` on each tile.
+
+**Phase 2 — Real jigsaw pieces:** Procedurally generate SVG clip-paths with interlocking tabs and blanks, so adjacent pieces fit together like a real jigsaw. Each edge (top/right/bottom/left) is randomly assigned tab or blank at puzzle generation time, with the neighbouring piece getting the complementary shape.
+
+---
+
+## 9. Out of Scope
 
 - User authentication / login
 - Admin panel for managing content (content managed directly in DynamoDB console or via seed scripts)

@@ -1,0 +1,89 @@
+<h2>3 Architecture Approaches</h2>
+<p class="subtitle">Same stack at the core (Flask + Lambda + DynamoDB) — the difference is how the frontend interactivity is handled.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="htmx" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Flask + HTMX <span style="background:#f59e0b;color:#1a1a1a;font-size:0.7rem;padding:2px 8px;border-radius:10px;margin-left:6px;">Recommended</span></h3>
+      <p>Flask renders all HTML server-side (Jinja2 templates). HTMX adds interactivity by swapping small HTML fragments — likes, comments, and visit counts update without a page reload, <strong>but you write almost no JavaScript</strong>.</p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Very beginner-friendly — no JS framework</li>
+            <li>Comments, likes, visit counts work out of the box</li>
+            <li>Easy to debug (just HTML + Python)</li>
+            <li>Works great with Flask + Jinja2</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>One extra library to learn (HTMX — small)</li>
+            <li>More Lambda calls per interaction</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="vanilla-js" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Flask + Vanilla JavaScript</h3>
+      <p>Flask renders pages server-side. All interactive features (likes, comments, visit counts) use <code>fetch()</code> calls to Flask API endpoints. You write the JS yourself — full control, no extra libraries.</p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>No extra dependencies</li>
+            <li>Good learning opportunity for JS</li>
+            <li>Fine-grained animation control</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>More JS to write and maintain</li>
+            <li>Easy to get messy as features grow</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Flask API + Static Frontend (S3)</h3>
+      <p>Flask becomes a pure JSON API on Lambda. HTML/CSS/JS lives on S3 as a static site. The frontend calls the API for all data. Closest to a modern "decoupled" architecture.</p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Frontend and backend fully independent</li>
+            <li>Static site = blazing fast loads</li>
+            <li>Scales easily</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Most complex to set up (two separate deployments)</li>
+            <li>Requires more JS knowledge</li>
+            <li>Harder to get right for beginners</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:1.5rem; padding: 1rem; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.08); border-radius: 0 6px 6px 0;">
+  <p><strong>My recommendation: A (HTMX).</strong> Your prompt specifically mentioned HTMX, it fits Flask beautifully, and it means your interactive features (likes, comments, visit counts) need almost zero JavaScript. You can still sprinkle Vanilla JS for animations (heart bounce, timeline slide-in) on top.</p>
+</div>
+
+<p class="subtitle" style="margin-top:1rem">Click your choice — or tell me in terminal if you want a mix.</p>

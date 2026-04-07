@@ -1,0 +1,231 @@
+<h2>Data Models — DynamoDB Schema</h2>
+<p class="subtitle">Design Section 2 of 4 — 5 tables, each with a clear single purpose.</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.5rem;">
+
+  <!-- Projects Table -->
+  <div class="mockup">
+    <div class="mockup-header">📦 projects</div>
+    <div class="mockup-body" style="font-size:0.8rem;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="color:#f59e0b; border-bottom:1px solid #2a2a2a;">
+          <td style="padding:4px 6px;">Attribute</td>
+          <td style="padding:4px 6px;">Type</td>
+          <td style="padding:4px 6px;">Notes</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;"><strong>pk</strong> 🔑</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">e.g. <code>jamf-splunk-integration</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">title</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Display name</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">description</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Short summary</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">category</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;"><code>jamf</code> | <code>mcri</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">tech_stack</td>
+          <td style="padding:4px 6px; color:#888;">List</td>
+          <td style="padding:4px 6px; color:#666;">["Flask","Lambda","Splunk"]</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">current_phase</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Discovery→Build→Launch</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">phases</td>
+          <td style="padding:4px 6px; color:#888;">Map</td>
+          <td style="padding:4px 6px; color:#666;">Phase notes per stage</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">like_count</td>
+          <td style="padding:4px 6px; color:#888;">Number</td>
+          <td style="padding:4px 6px; color:#666;">Atomic increment</td>
+        </tr>
+        <tr style="color:#e2e2e2;">
+          <td style="padding:4px 6px;">created_at</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">ISO timestamp</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Photos Table -->
+  <div class="mockup">
+    <div class="mockup-header">🌅 sunset_photos</div>
+    <div class="mockup-body" style="font-size:0.8rem;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="color:#f59e0b; border-bottom:1px solid #2a2a2a;">
+          <td style="padding:4px 6px;">Attribute</td>
+          <td style="padding:4px 6px;">Type</td>
+          <td style="padding:4px 6px;">Notes</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;"><strong>pk</strong> 🔑</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">e.g. <code>sunset-vic-falls-01</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">s3_url</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Full S3 image URL</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">location</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">e.g. "Victoria Falls"</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">story</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Caption / short story</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">taken_at</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Date photo was taken</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">like_count</td>
+          <td style="padding:4px 6px; color:#888;">Number</td>
+          <td style="padding:4px 6px; color:#666;">Atomic increment</td>
+        </tr>
+        <tr style="color:#e2e2e2;">
+          <td style="padding:4px 6px;">created_at</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">ISO timestamp</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Books Table -->
+  <div class="mockup">
+    <div class="mockup-header">📚 books</div>
+    <div class="mockup-body" style="font-size:0.8rem;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="color:#f59e0b; border-bottom:1px solid #2a2a2a;">
+          <td style="padding:4px 6px;">Attribute</td>
+          <td style="padding:4px 6px;">Type</td>
+          <td style="padding:4px 6px;">Notes</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;"><strong>pk</strong> 🔑</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">e.g. <code>atomic-habits</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">title</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Book title</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">author</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Author name</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">status</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;"><code>reading</code> | <code>read</code></td>
+        </tr>
+        <tr style="color:#e2e2e2;">
+          <td style="padding:4px 6px;">reflection</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">One-line takeaway</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Comments Table -->
+  <div class="mockup">
+    <div class="mockup-header">💬 comments</div>
+    <div class="mockup-body" style="font-size:0.8rem;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="color:#f59e0b; border-bottom:1px solid #2a2a2a;">
+          <td style="padding:4px 6px;">Attribute</td>
+          <td style="padding:4px 6px;">Type</td>
+          <td style="padding:4px 6px;">Notes</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;"><strong>pk</strong> 🔑</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;"><code>home</code>, <code>project#slug</code>, <code>photo#id</code></td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;"><strong>sk</strong> 🔑</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Timestamp (newest-first sort)</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+          <td style="padding:4px 6px;">author</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Visitor's name</td>
+        </tr>
+        <tr style="color:#e2e2e2;">
+          <td style="padding:4px 6px;">body</td>
+          <td style="padding:4px 6px; color:#888;">String</td>
+          <td style="padding:4px 6px; color:#666;">Comment text</td>
+        </tr>
+      </table>
+      <div style="margin-top:0.6rem; font-size:0.75rem; color:#666; border-top:1px solid #2a2a2a; padding-top:0.5rem;">
+        One table handles all comment types. <code>pk</code> is the parent item, <code>sk</code> is the timestamp — querying by pk returns all comments newest-first.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Visits Table -->
+<div class="mockup" style="margin-top:1rem;">
+  <div class="mockup-header">🌍 page_visits — one row per page, atomically incremented</div>
+  <div class="mockup-body" style="font-size:0.8rem; display:grid; grid-template-columns: 2fr 3fr; gap:1rem;">
+    <table style="width:100%; border-collapse:collapse;">
+      <tr style="color:#f59e0b; border-bottom:1px solid #2a2a2a;">
+        <td style="padding:4px 6px;">Attribute</td>
+        <td style="padding:4px 6px;">Type</td>
+        <td style="padding:4px 6px;">Example</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+        <td style="padding:4px 6px;"><strong>pk</strong> 🔑</td>
+        <td style="padding:4px 6px; color:#888;">String</td>
+        <td style="padding:4px 6px; color:#666;"><code>home</code>, <code>sunsets</code>, <code>projects</code></td>
+      </tr>
+      <tr style="border-bottom:1px solid #1e1e1e; color:#e2e2e2;">
+        <td style="padding:4px 6px;">count</td>
+        <td style="padding:4px 6px; color:#888;">Number</td>
+        <td style="padding:4px 6px; color:#666;">1,204</td>
+      </tr>
+      <tr style="color:#e2e2e2;">
+        <td style="padding:4px 6px;">last_visited</td>
+        <td style="padding:4px 6px; color:#888;">String</td>
+        <td style="padding:4px 6px; color:#666;">ISO timestamp</td>
+      </tr>
+    </table>
+    <div style="color:#888; font-size:0.8rem; line-height:1.7;">
+      <div style="color:#f59e0b; margin-bottom:0.4rem;">Special row: <code>pk = "global"</code></div>
+      Holds the total across all pages — shown in the nav bar as 🌍 1,204 visits.<br><br>
+      Each page visit triggers a DynamoDB <strong>ADD</strong> operation (atomic increment) — safe even if two people visit at exactly the same time.
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:1rem; padding: 1rem; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.08); border-radius: 0 6px 6px 0; font-size:0.82rem;">
+  <strong>Summary: 5 DynamoDB tables</strong> — <code>projects</code> · <code>sunset_photos</code> · <code>books</code> · <code>comments</code> · <code>page_visits</code><br>
+  Photos stored in <strong>S3</strong> (URLs saved in DynamoDB). No user accounts needed — visitors comment with just a name.
+</div>
+
+<p class="subtitle" style="margin-top:1rem;">Does this data model look right? Anything missing or to change? Tell me in the terminal.</p>

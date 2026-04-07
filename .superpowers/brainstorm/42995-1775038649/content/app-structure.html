@@ -1,0 +1,86 @@
+<h2>Flask App Structure</h2>
+<p class="subtitle">Design Section 3 of 4 — How the files fit together.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Project Directory Layout</div>
+  <div class="mockup-body" style="font-family: monospace; font-size: 0.82rem; line-height:1.9; color:#ccc;">
+    <span style="color:#f59e0b;">sarah-portfolio-hub/</span><br>
+    ├── <span style="color:#f59e0b;">app.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># Flask app + Mangum Lambda handler</span><br>
+    ├── <span style="color:#f59e0b;">lambda_handler.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># Entry point AWS Lambda calls</span><br>
+    ├── requirements.txt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># flask, mangum, boto3, htmx</span><br>
+    ├── <span style="color:#888;">db.py</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># DynamoDB helpers (get/put/increment)</span><br>
+    ├── <span style="color:#888;">routes/</span><br>
+    │ &nbsp;&nbsp;├── home.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /, guestbook comments, likes</span><br>
+    │ &nbsp;&nbsp;├── timeline.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /timeline, HTMX card expand</span><br>
+    │ &nbsp;&nbsp;├── projects.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /projects, /projects/&lt;slug&gt;</span><br>
+    │ &nbsp;&nbsp;├── sunsets.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /sunsets, lightbox, likes, comments</span><br>
+    │ &nbsp;&nbsp;├── books.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /books</span><br>
+    │ &nbsp;&nbsp;├── hobbies.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /hobbies</span><br>
+    │ &nbsp;&nbsp;├── family.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /family</span><br>
+    │ &nbsp;&nbsp;├── contact.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /contact</span><br>
+    │ &nbsp;&nbsp;└── settings.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># /settings (served as page, prefs in JS)</span><br>
+    ├── <span style="color:#888;">templates/</span><br>
+    │ &nbsp;&nbsp;├── base.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># Nav, visit counter, theme CSS vars</span><br>
+    │ &nbsp;&nbsp;├── home.html<br>
+    │ &nbsp;&nbsp;├── projects/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># list.html + detail.html</span><br>
+    │ &nbsp;&nbsp;├── sunsets.html<br>
+    │ &nbsp;&nbsp;├── partials/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># HTMX fragments (comment list, like btn)</span><br>
+    │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── comment_list.html<br>
+    │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── like_button.html<br>
+    │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── visit_count.html<br>
+    └── <span style="color:#888;">static/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;├── css/style.css &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># CSS variables for themes + accent</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;├── js/settings.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># localStorage theme/accent logic</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;└── js/animations.js &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#555;"># Timeline slide-in, heart bounce</span><br>
+  </div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
+
+  <div class="mockup">
+    <div class="mockup-header">Request Flow — a page visit</div>
+    <div class="mockup-body" style="font-size:0.8rem; line-height:2;">
+      <div style="display:flex; align-items:center; gap:0.5rem; color:#ccc;">
+        <span style="background:#1e3a5f;padding:2px 8px;border-radius:4px;">Browser</span>
+        <span style="color:#555;">→</span>
+        <span style="background:#1e3a5f;padding:2px 8px;border-radius:4px;">API Gateway</span>
+        <span style="color:#555;">→</span>
+        <span style="background:#7c3a00;padding:2px 8px;border-radius:4px;">Lambda</span>
+      </div>
+      <div style="color:#555; margin:4px 0 4px 2rem;">↓ Mangum converts event to WSGI</div>
+      <div style="display:flex; align-items:center; gap:0.5rem; color:#ccc;">
+        <span style="background:#7c3a00;padding:2px 8px;border-radius:4px;">Flask route</span>
+        <span style="color:#555;">→</span>
+        <span style="background:#1a4a2a;padding:2px 8px;border-radius:4px;">db.py</span>
+        <span style="color:#555;">→</span>
+        <span style="background:#1a4a2a;padding:2px 8px;border-radius:4px;">DynamoDB</span>
+      </div>
+      <div style="color:#555; margin:4px 0 4px 2rem;">↓ Jinja2 renders template</div>
+      <div style="display:flex; align-items:center; gap:0.5rem; color:#ccc;">
+        <span style="background:#1e3a5f;padding:2px 8px;border-radius:4px;">HTML response</span>
+        <span style="color:#555;">→ Browser</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">HTMX Interaction Flow — a like click</div>
+    <div class="mockup-body" style="font-size:0.8rem; line-height:2;">
+      <div style="color:#ccc;">1. Visitor clicks ❤ button</div>
+      <div style="color:#555; padding-left:1rem;">HTMX sends POST /like/project/&lt;slug&gt;</div>
+      <div style="color:#ccc;">2. Flask route increments DynamoDB</div>
+      <div style="color:#555; padding-left:1rem;">db.increment_likes("projects", slug)</div>
+      <div style="color:#ccc;">3. Flask returns just the button HTML</div>
+      <div style="color:#555; padding-left:1rem;">renders partials/like_button.html</div>
+      <div style="color:#ccc;">4. HTMX swaps the button in-place</div>
+      <div style="color:#555; padding-left:1rem;">❤ 12 → ❤ 13, heart bounces (CSS)</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:1rem; padding: 1rem; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.08); border-radius: 0 6px 6px 0; font-size:0.82rem;">
+  <strong>Key idea — partials:</strong> The <code>templates/partials/</code> folder holds small HTML snippets that HTMX swaps in without reloading the page. The like button, comment list, and visit counter are all partials — Flask renders them and HTMX drops them into the right spot.
+</div>
+
+<p class="subtitle" style="margin-top:1rem;">Does this structure make sense? Say yes and we'll move to the final section — the AWS Console deployment steps.</p>
