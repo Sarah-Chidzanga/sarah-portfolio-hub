@@ -53,8 +53,8 @@ sunsets = [
     },
 ]
 
-for sunset in sunsets:
-    put_item('sunset_photos', sunset)
-    print(f"Added: {sunset['location']}")
-
-print("Done — 4 sunsets seeded.")
+if __name__ == '__main__':
+    for sunset in sunsets:
+        put_item('sunset_photos', sunset)
+        print(f"Added: {sunset['location']}")
+    print("Done — 4 sunsets seeded.")
