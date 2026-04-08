@@ -6,11 +6,39 @@ projects_bp = Blueprint('projects', __name__)
 
 PHASES = ['Discovery', 'Alignment', 'Planning', 'Build', 'Launch']
 
+_INITIAL_PROJECTS = [
+    {
+        'pk': 'department-creator',
+        'title': 'Department Creator',
+        'description': 'Flask app to bulk-create departments in Jamf Pro via the API.',
+        'category': 'jamf',
+        'tech': 'Flask, AWS Lambda, API Gateway, Jamf Pro API',
+        'current_phase': 'Launch',
+        'live_url': 'https://a4chajwta6.execute-api.eu-west-1.amazonaws.com',
+        'like_count': 0,
+    },
+]
+
 
 @projects_bp.route('/projects')
 def projects_list():
-    track_visit('projects')
-    all_projects = scan_table('projects')
+    try:
+        track_visit('projects')
+    except Exception:
+        pass
+    try:
+        all_projects = scan_table('projects') or []
+    except Exception:
+        all_projects = []
+    # Auto-seed initial projects
+    existing_pks = {p['pk'] for p in all_projects}
+    for proj in _INITIAL_PROJECTS:
+        if proj['pk'] not in existing_pks:
+            try:
+                put_item('projects', proj)
+            except Exception:
+                pass
+            all_projects.append(proj)
     all_projects.sort(key=lambda p: p.get('created_at', ''), reverse=True)
     category = request.args.get('category', 'all')
     if category != 'all':
