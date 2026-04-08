@@ -22,7 +22,7 @@ _INITIAL_PROJECTS = [
         'title': 'Matter Hub',
         'description': 'Hackathon project built with my MCRI team — handled documentation, ticket management, and coding.',
         'category': 'mcri',
-        'tech': 'Jira, Confluence, Swift',
+        'tech': 'Jira, Confluence, Figma, Miro, GitHub',
         'current_phase': 'Launch',
         'github_url': 'https://github.com/iantdzingira/Matter-Hub',
         'like_count': 0,
