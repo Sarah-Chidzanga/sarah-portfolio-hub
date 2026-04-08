@@ -45,7 +45,7 @@
   <div class="lightbox-content" onclick="event.stopPropagation()">
     <img id="lb-img" src="" alt="">
     <div class="lightbox-info">
-      <div id="lb-scroll-hint" class="lb-scroll-hint">&#8595; Scroll for story, puzzle &amp; comments</div>
+      <div id="lb-scroll-hint" class="lb-scroll-hint" aria-hidden="true">&#8595; Scroll for story, puzzle &amp; comments</div>
       <h3 id="lb-location" style="color:var(--accent);"></h3>
       <p id="lb-story"    style="color:var(--text-secondary); margin: 0.5rem 0 1rem;"></p>
       <p id="lb-date"     style="color:var(--text-secondary); font-size:0.8rem; margin-bottom:1rem;"></p>
@@ -171,6 +171,7 @@
     font-size: 0.78rem;
     margin-bottom: 0.75rem;
     animation: fadeHint 3s ease-in-out forwards;
+    pointer-events: none;
   }
 </style>
 
