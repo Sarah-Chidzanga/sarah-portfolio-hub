@@ -54,12 +54,21 @@ _STATIC_SUNSETS = [
 
 @sunsets_bp.route('/sunsets')
 def sunsets():
-    track_visit('sunsets')
-    photos = scan_table('sunset_photos')
+    try:
+        track_visit('sunsets')
+    except Exception:
+        pass
+    try:
+        photos = scan_table('sunset_photos') or []
+    except Exception:
+        photos = []
     existing_pks = {p['pk'] for p in photos}
     for sunset in _STATIC_SUNSETS:
         if sunset['pk'] not in existing_pks:
-            put_item('sunset_photos', sunset)
+            try:
+                put_item('sunset_photos', sunset)
+            except Exception:
+                pass
             photos.append(sunset)
     photos.sort(key=lambda p: p.get('created_at', ''), reverse=True)
     return render_template('sunsets.html', photos=photos)
