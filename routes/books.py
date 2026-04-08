@@ -31,12 +31,17 @@ def books():
         all_books = scan_table('books') or []
     except Exception:
         all_books = []
-    if not all_books:
-        try:
-            for book in _INITIAL_BOOKS:
+    # Auto-seed missing books
+    existing_pks = {b['pk'] for b in all_books if 'pk' in b}
+    for book in _INITIAL_BOOKS:
+        if book['pk'] not in existing_pks:
+            try:
                 put_item('books', book)
-        except Exception:
-            pass
+            except Exception:
+                pass
+            all_books.append(book)
+    # Fallback: if still empty, use initial books directly
+    if not all_books:
         all_books = _INITIAL_BOOKS
     currently_reading = [b for b in all_books if b.get('status') == 'reading']
     have_read = [b for b in all_books if b.get('status') == 'read']
