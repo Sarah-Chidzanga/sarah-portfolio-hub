@@ -64,7 +64,7 @@ def about():
         'currently_learning': ['AWS Solutions Architecture', 'Terraform', 'TypeScript'],
         'links': {
             'portfolio': 'https://sarahchidzanga.com',
-            'linkedin': 'https://linkedin.com/in/sarah-chidzanga',
+            'linkedin': 'https://www.linkedin.com/in/sarah-chidzanga-554028356/',
             'email': 'sarah.chidzanga@jamf.com',
         },
     })
