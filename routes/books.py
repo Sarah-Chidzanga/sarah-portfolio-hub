@@ -23,8 +23,14 @@ _INITIAL_BOOKS = [
 
 @books_bp.route('/books')
 def books():
-    track_visit('books')
-    all_books = scan_table('books')
+    try:
+        track_visit('books')
+    except Exception:
+        pass
+    try:
+        all_books = scan_table('books') or []
+    except Exception:
+        all_books = []
     if not all_books:
         try:
             for book in _INITIAL_BOOKS:
