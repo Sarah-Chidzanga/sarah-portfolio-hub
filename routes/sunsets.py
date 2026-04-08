@@ -62,16 +62,29 @@ def sunsets():
         photos = scan_table('sunset_photos') or []
     except Exception:
         photos = []
-    existing_pks = {p['pk'] for p in photos}
+    # Build lookup of static sunsets by pk
+    static_by_pk = {s['pk']: s for s in _STATIC_SUNSETS}
+    # Update existing photos with correct static URLs, add missing ones
+    updated_photos = []
+    seen_pks = set()
+    for photo in photos:
+        pk = photo.get('pk')
+        if pk in static_by_pk:
+            # Use static data to ensure correct URLs
+            updated_photos.append(static_by_pk[pk])
+        else:
+            updated_photos.append(photo)
+        seen_pks.add(pk)
+    # Add any missing static sunsets
     for sunset in _STATIC_SUNSETS:
-        if sunset['pk'] not in existing_pks:
+        if sunset['pk'] not in seen_pks:
             try:
                 put_item('sunset_photos', sunset)
             except Exception:
                 pass
-            photos.append(sunset)
-    photos.sort(key=lambda p: p.get('created_at', ''), reverse=True)
-    return render_template('sunsets.html', photos=photos)
+            updated_photos.append(sunset)
+    updated_photos.sort(key=lambda p: p.get('created_at', ''), reverse=True)
+    return render_template('sunsets.html', photos=updated_photos)
 
 
 @sunsets_bp.route('/sunsets/<photo_id>/comments')
