@@ -26,7 +26,7 @@
     setAccent: function (a) {
       localStorage.setItem(ACCENT_KEY, a);
       apply(localStorage.getItem(THEME_KEY) || 'dark', a, localStorage.getItem(BG_KEY) || 'dark');
-      document.querySelectorAll('.accent-swatch').forEach(function (el) {
+      document.querySelectorAll('.accent-swatch:not(.bg-swatch)').forEach(function (el) {
         el.classList.toggle('active', el.dataset.accent === a);
       });
     },
