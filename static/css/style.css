@@ -41,6 +41,8 @@
 [data-accent="blush"]  { --accent: #E1B8A2; --accent-hover: #C99A84; }
 [data-accent="amber"]  { --accent: #f59e0b; --accent-hover: #d97706; }
 [data-accent="violet"] { --accent: #8b5cf6; --accent-hover: #7c3aed; }
+[data-accent="rust"]   { --accent: #ef4444; --accent-hover: #dc2626; }
+[data-accent="blue"]   { --accent: #3b82f6; --accent-hover: #2563eb; }
 
 /* ── Reset & base ──────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -134,7 +136,7 @@ h1, h2, h3 { line-height: 1.25; }
   white-space: nowrap;
 }
 
-.sidebar-link:hover { color: var(--accent); background: rgba(0,0,0,0.06); }
+.sidebar-link:hover { color: var(--accent); background: rgba(128,128,128,0.10); }
 .sidebar-link.active { color: var(--accent); }
 
 .sidebar-icon { font-size: 1.1rem; flex-shrink: 0; width: 20px; text-align: center; }
