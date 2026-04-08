@@ -64,15 +64,16 @@ def sunsets():
         photos = []
     # Build lookup of static sunsets by pk
     static_by_pk = {s['pk']: s for s in _STATIC_SUNSETS}
-    # Update existing photos with correct static URLs, add missing ones
+    # Keep all photos: use static URLs for static ones, keep others from DynamoDB
     updated_photos = []
     seen_pks = set()
     for photo in photos:
         pk = photo.get('pk')
         if pk in static_by_pk:
-            # Use static data to ensure correct URLs
+            # Use static data to ensure correct local URLs
             updated_photos.append(static_by_pk[pk])
         else:
+            # Keep other photos from DynamoDB (old S3 photos)
             updated_photos.append(photo)
         seen_pks.add(pk)
     # Add any missing static sunsets
