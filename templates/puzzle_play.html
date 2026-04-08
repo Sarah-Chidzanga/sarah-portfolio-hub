@@ -92,7 +92,7 @@
   // tab-out protrudes AWAY from the cell centre; blank-in cuts INTO it.
   function tilePathData(row, col, rows, cols, edges, cs, s) {
     var te  = getTileEdges(row, col, rows, cols, edges);
-    var hw  = cs * 0.15;          // half-tab-width  (tab width = cs*0.3)
+    var hw  = cs * 0.20;          // half-tab-width  (tab width = cs*0.4)
     var midX = s + cs / 2;
     var midY = s + cs / 2;
     var d = 'M ' + s + ',' + s + ' ';
@@ -302,7 +302,7 @@
   var board       = document.getElementById('puzzle-board');
   var BOARD_SIZE  = Math.min(480, Math.floor(window.innerWidth * 0.9));
   var CELL_SIZE   = Math.floor(BOARD_SIZE / COLS);
-  var TAB_SIZE    = Math.round(CELL_SIZE * 0.18);
+  var TAB_SIZE    = Math.round(CELL_SIZE * 0.28);
   var EDGES       = generateEdges(ROWS, COLS);
 
   board.style.width  = (COLS * CELL_SIZE) + 'px';
