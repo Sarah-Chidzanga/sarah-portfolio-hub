@@ -16,6 +16,8 @@ def create_app():
     from routes.visits import visits_bp
     from routes.api import api_bp
     from routes.puzzle import puzzle_bp
+    from routes.skills import skills_bp
+    from routes.resume import resume_bp
 
     app.register_blueprint(home_bp)
     app.register_blueprint(timeline_bp)
@@ -29,6 +31,8 @@ def create_app():
     app.register_blueprint(visits_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(puzzle_bp)
+    app.register_blueprint(skills_bp)
+    app.register_blueprint(resume_bp)
 
     return app
 

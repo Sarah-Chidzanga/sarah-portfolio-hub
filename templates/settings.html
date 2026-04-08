@@ -6,23 +6,29 @@
 <p class="section-subtitle">Customise how the site looks for you. Saved in your browser.</p>
 
 <div class="settings-section">
-  <h3>🎨 Appearance</h3>
-
-  <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">Theme</p>
-  <div class="theme-options">
-    <div class="theme-option" data-theme="light" onclick="SarahSettings.setTheme('light')">
-      <div style="font-size: 1.5rem;">☀️</div>
-      <div style="margin-top: 0.4rem; font-size: 0.85rem;">Light</div>
-    </div>
-    <div class="theme-option" data-theme="natural" onclick="SarahSettings.setTheme('natural')">
-      <div style="font-size: 1.5rem;">🌿</div>
-      <div style="margin-top: 0.4rem; font-size: 0.85rem;">Natural</div>
-    </div>
-    <div class="theme-option" data-theme="dark" onclick="SarahSettings.setTheme('dark')">
-      <div style="font-size: 1.5rem;">🌙</div>
-      <div style="margin-top: 0.4rem; font-size: 0.85rem;">Dark</div>
-    </div>
+  <h3>🖼 Background</h3>
+  <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">Background colour</p>
+  <div class="accent-options" style="margin-bottom:1.25rem;">
+    <div class="accent-swatch bg-swatch" data-bg="dark"
+         style="background:#111111;"
+         onclick="SarahSettings.setBg('dark')" title="Dark"></div>
+    <div class="accent-swatch bg-swatch" data-bg="deep-blue"
+         style="background:#0f1929;"
+         onclick="SarahSettings.setBg('deep-blue')" title="Deep Blue"></div>
+    <div class="accent-swatch bg-swatch" data-bg="midnight"
+         style="background:#1e1b2e;"
+         onclick="SarahSettings.setBg('midnight')" title="Midnight"></div>
+    <div class="accent-swatch bg-swatch" data-bg="pearl"
+         style="background:#F8F6FA; border:1px solid var(--border);"
+         onclick="SarahSettings.setBg('pearl')" title="Pearl"></div>
+    <div class="accent-swatch bg-swatch" data-bg="sage"
+         style="background:#E8EFE8;"
+         onclick="SarahSettings.setBg('sage')" title="Sage"></div>
   </div>
+</div>
+
+<div class="settings-section">
+  <h3>🎨 Appearance</h3>
 
   <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">Accent Colour</p>
   <div class="accent-options">
@@ -31,6 +37,7 @@
     <div class="accent-swatch" data-accent="violet" style="background:#8b5cf6;" onclick="SarahSettings.setAccent('violet')" title="Violet"></div>
     <div class="accent-swatch" data-accent="sage"   style="background:#10b981;" onclick="SarahSettings.setAccent('sage')"   title="Sage"></div>
     <div class="accent-swatch" data-accent="blue"   style="background:#3b82f6;" onclick="SarahSettings.setAccent('blue')"   title="Blue"></div>
+    <div class="accent-swatch" data-accent="rose"   style="background:#CF7D65;" onclick="SarahSettings.setAccent('rose')"   title="Rose"></div>
   </div>
 
   <p style="margin-top: 1rem; font-size: 0.78rem; color: var(--text-secondary);">
@@ -39,14 +46,16 @@
 </div>
 
 <script>
-  // Mark the active theme and accent on page load
   document.addEventListener('DOMContentLoaded', function () {
     var c = SarahSettings.current();
     document.querySelectorAll('.theme-option').forEach(function (el) {
       el.classList.toggle('active', el.dataset.theme === c.theme);
     });
-    document.querySelectorAll('.accent-swatch').forEach(function (el) {
+    document.querySelectorAll('.accent-swatch:not(.bg-swatch)').forEach(function (el) {
       el.classList.toggle('active', el.dataset.accent === c.accent);
+    });
+    document.querySelectorAll('.bg-swatch').forEach(function (el) {
+      el.classList.toggle('active', el.dataset.bg === c.bg);
     });
   });
 </script>

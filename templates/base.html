@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="botanical" data-accent="rose">
+<html lang="en" data-theme="dark" data-accent="amber" data-bg="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,27 +13,77 @@
   <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
 </head>
 <body>
-  <nav class="top-nav">
-    <a href="/" class="nav-brand">✦ Sarah Chidzanga</a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/timeline">Timeline</a>
-      <a href="/projects">Projects</a>
-      <a href="/sunsets">Sunsets</a>
-      <a href="/books">Books</a>
-      <a href="/hobbies">Hobbies</a>
-      <a href="/family">Family</a>
-      <a href="/contact">Contact</a>
-      <a href="/settings">⚙️</a>
+
+  <nav class="sidebar">
+    <div class="sidebar-profile">
+      <img src="{{ url_for('static', filename='images/sarah.jpg') }}" alt="Sarah" class="sidebar-avatar">
+      <span class="sidebar-name">Sarah C.</span>
     </div>
-    <div hx-get="/visits/global"
-         hx-trigger="load"
-         hx-swap="outerHTML">
-      <span class="visit-pill">🌍 ...</span>
+    <div class="sidebar-divider"></div>
+
+    <a href="/"          class="sidebar-link {% if request.path == '/' %}active{% endif %}">
+      <span class="sidebar-icon">🏠</span><span class="sidebar-label">Home</span>
+    </a>
+    <a href="/timeline"  class="sidebar-link {% if request.path == '/timeline' %}active{% endif %}">
+      <span class="sidebar-icon">⏳</span><span class="sidebar-label">Timeline</span>
+    </a>
+    <a href="/projects"  class="sidebar-link {% if request.path == '/projects' %}active{% endif %}">
+      <span class="sidebar-icon">🛠</span><span class="sidebar-label">Projects</span>
+    </a>
+    <a href="/skills"    class="sidebar-link {% if request.path == '/skills' %}active{% endif %}">
+      <span class="sidebar-icon">💡</span><span class="sidebar-label">Skills</span>
+    </a>
+    <a href="/resume"    class="sidebar-link {% if request.path == '/resume' %}active{% endif %}">
+      <span class="sidebar-icon">🎓</span><span class="sidebar-label">Resume</span>
+    </a>
+    <a href="/sunsets"   class="sidebar-link {% if request.path.startswith('/sunset') %}active{% endif %}">
+      <span class="sidebar-icon">🌅</span><span class="sidebar-label">Sunsets</span>
+    </a>
+    <a href="/books"     class="sidebar-link {% if request.path == '/books' %}active{% endif %}">
+      <span class="sidebar-icon">📚</span><span class="sidebar-label">Books</span>
+    </a>
+    <a href="/hobbies"   class="sidebar-link {% if request.path == '/hobbies' %}active{% endif %}">
+      <span class="sidebar-icon">🎮</span><span class="sidebar-label">Hobbies</span>
+    </a>
+    <a href="/family"    class="sidebar-link {% if request.path == '/family' %}active{% endif %}">
+      <span class="sidebar-icon">👨‍👩‍👧</span><span class="sidebar-label">Family</span>
+    </a>
+    <a href="/contact"   class="sidebar-link {% if request.path == '/contact' %}active{% endif %}">
+      <span class="sidebar-icon">💬</span><span class="sidebar-label">Contact</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <a href="/settings" class="sidebar-link {% if request.path == '/settings' %}active{% endif %}">
+        <span class="sidebar-icon">⚙️</span><span class="sidebar-label">Settings</span>
+      </a>
+      <div hx-get="/visits/global"
+           hx-trigger="load"
+           hx-swap="outerHTML">
+        <span class="visit-pill">🌍 ...</span>
+      </div>
     </div>
   </nav>
 
-  <main>
+  <!-- Mobile bottom nav -->
+  <nav class="mobile-nav">
+    <a href="/"        class="{% if request.path == '/' %}active{% endif %}">
+      <span>🏠</span><span>Home</span>
+    </a>
+    <a href="/projects" class="{% if request.path == '/projects' %}active{% endif %}">
+      <span>🛠</span><span>Projects</span>
+    </a>
+    <a href="/skills"   class="{% if request.path == '/skills' %}active{% endif %}">
+      <span>💡</span><span>Skills</span>
+    </a>
+    <a href="/resume"   class="{% if request.path == '/resume' %}active{% endif %}">
+      <span>🎓</span><span>Resume</span>
+    </a>
+    <a href="/settings" class="{% if request.path == '/settings' %}active{% endif %}">
+      <span>⚙️</span><span>Settings</span>
+    </a>
+  </nav>
+
+  <main style="margin-left: 56px;">
     {% block content %}{% endblock %}
   </main>
 

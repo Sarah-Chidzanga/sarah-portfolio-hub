@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Resume — Sarah Chidzanga{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Resume</h1>
+<p class="section-subtitle">Education, certifications, and languages.</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; flex-wrap:wrap;">
+
+  <!-- Left: Education + Certifications -->
+  <div>
+    <h2 style="font-size:1rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem;">Education</h2>
+
+    <div class="edu-item">
+      <div class="edu-title">MCRI — Mobility &amp; Cloud Research Institute</div>
+      <div class="edu-date">February 2025 — present</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-title">Mosi oa Tunya High School</div>
+      <div class="edu-date">2023 – 2024 · Advanced Level</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-title">Mkhosana Adventist Secondary School</div>
+      <div class="edu-date">2022 · Ordinary Level</div>
+    </div>
+
+    <h2 style="font-size:1rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; margin:2rem 0 1.25rem;">Certifications</h2>
+
+    <div class="cert-item">
+      <span class="cert-bullet">✦</span>
+      <div>
+        <div>App Development with Swift — Associate</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">Certiport · Sep 4, 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-bullet">✦</span>
+      <div>
+        <div>App Development with Swift — Certified User</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">Certiport · Dec 15, 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-bullet">✦</span>
+      <div>
+        <div>Jamf Certified Associate — Jamf Pro</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">Jamf · Nov 13, 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-bullet">✦</span>
+      <div>
+        <div>Jamf Certified Associate — Jamf Protect</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">Jamf · Jan 16, 2026</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-bullet">✦</span>
+      <div>
+        <div>Mastering Self-Motivation</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">LinkedIn Learning · Sep 25, 2025</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <span class="cert-bullet">✦</span>
+      <div>
+        <div>Software Development Life Cycle / SDLC</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">LinkedIn Learning · Mar 24, 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Languages -->
+  <div>
+    <h2 style="font-size:1rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1.25rem;">Languages</h2>
+
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><span>Shona</span><span>Native</span></div>
+      <div class="skill-bar-track"><div class="skill-bar-fill" style="width:96%;"></div></div>
+    </div>
+
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><span>English</span><span>Fluent</span></div>
+      <div class="skill-bar-track"><div class="skill-bar-fill" style="width:96%;"></div></div>
+    </div>
+
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><span>Ndebele</span><span>Conversational</span></div>
+      <div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%;"></div></div>
+    </div>
+
+    <div class="skill-bar-wrap">
+      <div class="skill-bar-label"><span>French</span><span>Beginner</span></div>
+      <div class="skill-bar-track"><div class="skill-bar-fill" style="width:20%;"></div></div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
