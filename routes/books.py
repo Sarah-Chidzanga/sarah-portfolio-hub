@@ -26,8 +26,11 @@ def books():
     track_visit('books')
     all_books = scan_table('books')
     if not all_books:
-        for book in _INITIAL_BOOKS:
-            put_item('books', book)
+        try:
+            for book in _INITIAL_BOOKS:
+                put_item('books', book)
+        except Exception:
+            pass
         all_books = _INITIAL_BOOKS
     currently_reading = [b for b in all_books if b.get('status') == 'reading']
     have_read = [b for b in all_books if b.get('status') == 'read']

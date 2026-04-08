@@ -53,10 +53,16 @@
       <div id="lb-like"></div>
 
       <div style="margin-bottom:1rem;">
+        <div style="text-align:center; font-size:0.75rem; color:var(--accent);
+                    margin-bottom:0.4rem; animation:bounceDown 1.2s ease-in-out infinite;">
+          ↓ play the puzzle below
+        </div>
         <a id="lb-puzzle-link" href="#"
            class="like-btn"
-           style="text-decoration:none; font-size:0.85rem;">
-          🧩 Play as puzzle
+           style="text-decoration:none; font-size:1rem; font-weight:700;
+                  display:block; text-align:center; padding:0.65rem 1rem;
+                  border:2px solid var(--accent); letter-spacing:0.03em;">
+          🧩 Play as Puzzle
         </a>
       </div>
 
@@ -159,6 +165,10 @@
   }
   .carousel-dot.active {
     background: var(--accent);
+  }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(4px); }
   }
   @keyframes fadeHint {
     0%   { opacity: 1; }
