@@ -17,6 +17,16 @@ _INITIAL_PROJECTS = [
         'live_url': 'https://a4chajwta6.execute-api.eu-west-1.amazonaws.com',
         'like_count': 0,
     },
+    {
+        'pk': 'matter-hub',
+        'title': 'Matter Hub',
+        'description': 'Hackathon project built with my MCRI team — handled documentation, ticket management, and coding.',
+        'category': 'mcri',
+        'tech': 'Jira, Confluence, Swift',
+        'current_phase': 'Launch',
+        'github_url': 'https://github.com/iantdzingira/Matter-Hub',
+        'like_count': 0,
+    },
 ]
 
 
